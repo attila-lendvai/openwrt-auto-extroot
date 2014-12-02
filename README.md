@@ -1,4 +1,4 @@
-openwrt-auto-extroot
-====================
+* This is more of a template than something standalone
 
-Use OpenWRT ImageBuilder to build a firmware that automatically formats and moves extroot to any inserted pendrive
+I've extracted this from another project, but I think it's useful
+enough for making it public.

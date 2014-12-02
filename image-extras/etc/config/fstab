@@ -1,0 +1,27 @@
+config global 'automount'
+      option from_fstab '0'
+      option anon_mount '0'
+
+config global 'autoswap'
+      option from_fstab '0'
+      option anon_swap '0'
+
+config swap
+      option uuid '05d615b3-bef8-460c-9a23-52db8d09e002'
+      option enabled '1'
+
+config mount
+      option target '/overlay'
+      option uuid '05d615b3-bef8-460c-9a23-52db8d09e000'
+      option fstype 'ext4'
+      option options 'rw,noatime'
+      option enabled '1'
+      option enabled_fsck '0'
+
+config mount
+      option target '/mnt/data'
+      option uuid '05d615b3-bef8-460c-9a23-52db8d09e001'
+      option fstype 'ext4'
+      option options 'rw,noatime'
+      option enabled '1'
+      option enabled_fsck '0'
