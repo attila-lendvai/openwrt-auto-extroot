@@ -1,10 +1,10 @@
-config global 'automount'
-      option from_fstab '0'
-      option anon_mount '0'
-
-config global 'autoswap'
-      option from_fstab '0'
+config global
       option anon_swap '0'
+      option anon_mount '0'
+      option auto_swap '0'
+      option auto_mount '0'
+      option delay_root '3'
+      option check_fs '0'
 
 config swap
       option uuid '05d615b3-bef8-460c-9a23-52db8d09e002'

@@ -36,9 +36,9 @@ setupPendrivePartitions()
     # erase partition table
     dd if=/dev/zero of=/dev/sda bs=1M count=1
 
-    # first is 'swap'
-    # second is 'root'
-    # the rest is 'data'
+    # sda1 is 'swap'
+    # sda2 is 'root'
+    # sda3 is 'data'
     fdisk /dev/sda <<EOF
 o
 n
@@ -64,14 +64,13 @@ q
 EOF
     log "Finished partitioning /dev/sda using fdisk"
 
+    sleep 2
+
     until [ -e /dev/sda1 ]
     do
-        echo "Waiting for a partitions to show up in /dev"
+        echo "Waiting for partitions to show up in /dev"
         sleep 1
     done
-
-    # just to be sure we wait a bit more (i've seen once that mkswap worked on /dev/sda1, but then mkfs errored that there's no /dev/sda2 (?!))
-    sleep 3
 
     mkswap -L swap -U $swapUUID /dev/sda1
     mkfs.ext4 -L root -U $rootUUID /dev/sda2
@@ -83,17 +82,18 @@ EOF
 setupExtroot()
 {
     mkdir -p /mnt/extroot
+    # TODO they said on the wiki that it's optional, an empty overlay also works...
     # we need to make the internal overlay read-only, otherwise the two md5's may be different
     # due to writing to the internal overlay from this point until the reboot.
     # files: /.extroot.md5sum (extroot) and /etc/extroot.md5sum (internal)
-    mount -o remount,ro /
+    #mount -o remount,ro /
+    #log "Remounted / as read-only"
 
-    log "Remounted / as read-only"
-
-    mount UUID=$rootUUID /mnt/extroot
-    tar -C /overlay -cvf - . | tar -C /mnt/extroot -xf -
+    mount -U $rootUUID /mnt/extroot
+    #tar -C /overlay -cvf - . | tar -C /mnt/extroot -xf -
 
     # let's write a new rc.local on extroot which will shadow the one which is in the rom and runs stage1
+    mkdir -p /mnt/extroot/etc/
     cat >/mnt/extroot/etc/rc.local <<EOF
 /root/autoprovision-stage2.sh
 exit 0
@@ -112,9 +112,6 @@ EOF
 autoprovisionStage1()
 {
     signalAutoprovisionWorking
-
-    # this way it will set a random password and only ssh key based login will work
-    setRootPassword ""
 
     signalAutoprovisionWaitingForUser
     signalWaitingForPendrive

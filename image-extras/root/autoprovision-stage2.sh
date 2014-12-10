@@ -28,6 +28,7 @@ installPackages()
     #mv /etc/dropbear/authorized_keys /root/.ssh/
     #rm -rf /etc/dropbear
 
+    # CUSTOMIZE
     # install some more packages that don't need any extra steps
     opkg install lua luci ppp-mod-pppoe screen mc zip unzip logrotate
 
@@ -41,13 +42,20 @@ installPackages()
 autoprovisionStage2()
 {
     log "Autoprovisioning stage2 speaking"
-    signalAutoprovisionWorking
 
-    # it's not the nicest way to test whether stage2 has been done already, but this is a shell script...
+    # TODO this is a rather sloppy way to test whether stage2 has been done already, but this is a shell script...
     if [ $(uci get system.@system[0].log_type) == "file" ]; then
         log "Seems like autoprovisioning stage2 has been done already. Running stage3."
         #/root/autoprovision-stage3.py
     else
+        signalAutoprovisionWorking
+
+        # CUSTOMIZE: with an empty argument it will set a random password and only ssh key based login will work.
+        # please note that stage2 requires internet connection to install packages and you most probably want to log in
+        # on the GUI to set up a WAN connection. but on the other hand you don't want to end up using a publically
+        # available default password anywhere, therefore the random here...
+        setRootPassword ""
+
         installPackages
 
         crontab - <<EOF
@@ -57,6 +65,9 @@ EOF
 
         mkdir -p /var/log/archive
 
+        # logrotate is complaining without this directory
+        mkdir -p /var/lib
+
         uci set system.@system[0].log_type=file
         uci set system.@system[0].log_file=/var/log/syslog
         uci set system.@system[0].log_size=0
@@ -65,8 +76,6 @@ EOF
         sync
         reboot
     fi
-
-    stopSignallingAnything
 }
 
 autoprovisionStage2

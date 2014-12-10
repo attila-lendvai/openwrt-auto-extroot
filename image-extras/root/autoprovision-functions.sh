@@ -2,6 +2,9 @@
 
 # utility functions for the various stages of autoprovisioning
 
+# make sure that installed packages take precedence over busybox. see https://dev.openwrt.org/ticket/18523
+PATH="/usr/bin:/usr/sbin:/bin:/sbin"
+
 # these are also copy-pasted into other scripts and config files!
 rootUUID=05d615b3-bef8-460c-9a23-52db8d09e000
 dataUUID=05d615b3-bef8-460c-9a23-52db8d09e001
@@ -13,6 +16,7 @@ swapUUID=05d615b3-bef8-460c-9a23-52db8d09e002
 autoprovisionUSBLed="tp-link:green:usb"
 autoprovisionStatusLed="tp-link:green:qss"
 
+# CUSTOMIZE
 case $(ar71xx_board_name) in
 "tl-wr1043nd")
         autoprovisionUSBLed="tp-link:green:usb"
@@ -27,7 +31,7 @@ case $(ar71xx_board_name) in
         autoprovisionStatusLed="tp-link:green:wlan5g"
 	;;
 "tl-wdr4300")
-        autoprovisionUSBLed="tp-link:green:usb1"
+        autoprovisionUSBLed="tp-link:blue:wan"
         autoprovisionStatusLed="tp-link:blue:qss"
 	;;
 esac
@@ -76,6 +80,8 @@ signalFormatting()
 
 stopSignallingAnything()
 {
+    # TODO this is wrong, they should be restored to their original state.
+    # but then leds are only touched in the setup stage, which is ephemeral when things work as expected...
     setLedAttribute ${autoprovisionStatusLed} trigger none
     setLedAttribute ${autoprovisionUSBLed} trigger usbdev
 }
