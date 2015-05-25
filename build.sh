@@ -1,11 +1,13 @@
 #!/bin/bash
 
+set -e
+
 absolutize ()
 {
   if [ ! -d "$1" ]; then
     echo
     echo "ERROR: '$1' doesn't exist or not a directory!"
-    exit -1
+    kill -INT $$
   fi
 
   pushd "$1" >/dev/null
@@ -14,6 +16,12 @@ absolutize ()
 }
 
 TARGET_PLATFORM=$1
+
+if [ -z ${TARGET_PLATFORM} ]; then
+    echo "Usage: $0 target-platform (e.g. 'TLWDR4300')"
+    kill -INT $$
+fi
+
 BUILD=`dirname "$0"`"/build/"
 BUILD=`absolutize $BUILD`
 IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
