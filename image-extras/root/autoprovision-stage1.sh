@@ -81,30 +81,28 @@ EOF
 
 setupExtroot()
 {
-    mkdir -p /mnt/extroot
-    # TODO they said on the wiki that it's optional, an empty overlay also works...
-    # we need to make the internal overlay read-only, otherwise the two md5's may be different
-    # due to writing to the internal overlay from this point until the reboot.
-    # files: /.extroot.md5sum (extroot) and /etc/extroot.md5sum (internal)
-    #mount -o remount,ro /
-    #log "Remounted / as read-only"
-
+    mkdir -p /mnt/extroot/
     mount -U $rootUUID /mnt/extroot
-    #tar -C /overlay -cvf - . | tar -C /mnt/extroot -xf -
 
-    # let's write a new rc.local on extroot which will shadow the one which is in the rom and runs stage1
-    mkdir -p /mnt/extroot/etc/
-    cat >/mnt/extroot/etc/rc.local <<EOF
+    overlay_root=/mnt/extroot/upper
+
+    # at this point we could copy the entire root (a previous version of this script did that), or just the overlay from the flash,
+    # but it seems to work fine if we just create an empty overlay that is only replacing the rc.local from the firmware.
+
+    # let's write a new rc.local on the extroot that will shadow the one which is in the rom (to run stage2 instead of stage1)
+    mkdir -p ${overlay_root}/etc/
+    cat >${overlay_root}/etc/rc.local <<EOF
 /root/autoprovision-stage2.sh
 exit 0
 EOF
 
+    # TODO FIXME when this is enabled then Chaos Calmer doesn't turn on the network and thus the device remains unreachable
     # make sure that we shadow the /var -> /tmp symlink with the extroot, so that /var is permanent
-    mkdir -p /mnt/extroot/var
-    # KLUDGE: but /var/state is assumed to be transient, see https://dev.openwrt.org/ticket/12228
-    cd /mnt/extroot/var
-    ln -s /tmp state
-    cd -
+#    mkdir -p ${overlay_root}/var
+    # KLUDGE: /var/state is assumed to be transient, so link it to tmp, see https://dev.openwrt.org/ticket/12228
+#    cd ${overlay_root}/var
+#    ln -s /tmp state
+#    cd -
 
     log "Finished setting up extroot"
 }

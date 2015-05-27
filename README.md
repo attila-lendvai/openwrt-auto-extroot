@@ -27,7 +27,7 @@ it's easy to extend it.
 
 ## Tested with
 
-[OpenWRT Barrier Breaker 14.07](http://downloads.openwrt.org/barrier_breaker/14.07/)
+[OpenWRT Chaos Calmer 15.05 RC1](https://downloads.openwrt.org/chaos_calmer/15.05-rc1/)
 on a TP-Link WDR4300.
 
 # Building
