@@ -1,9 +1,13 @@
 # What
 
-It's a script to build a customized OpenWRT firmware that will
-automatically set up
-[extroot](http://wiki.openwrt.org/doc/howto/extroot) on any (!)
-storage device plugged into the USB port (`/dev/sda`).
+It's a script to build a customized OpenWRT firmware image.
+
+If this image is flashed on a device it will try to automatically
+set up [extroot](http://wiki.openwrt.org/doc/howto/extroot) on **any
+(!)** storage device plugged into the USB port (`/dev/sda`). Keep in
+mind that **this will erase any inserted storage device while the
+router is in the initial setup phase**! Unfortunately there's little
+that can be done at that point to ask the user for confirmation.
 
 # Why
 
