@@ -36,6 +36,8 @@ e.g. `./build.sh TLWDR4300`
 
 Results will be under `build/OpenWrt-ImageBuilder-ar71xx_generic-for-linux-x86_64`.
 
+To see a list of available targets, run this in the ImageBuilder dir: ```make info```.
+
 # Usage
 
 After flashing the firmware the router will have the standard
