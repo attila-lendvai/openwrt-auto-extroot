@@ -58,3 +58,10 @@ In stage 2 it will need an internet connection, so you should connect
 to its [LuCI interface](http://192.168.1.1) to set up an Internet
 upstream, and then it will automatically continue installing packages,
 finishing the whole process, and then do a final reboot.
+
+# Troubleshooting
+
+* If the build doesn't yield a firmware file: if there's not enough
+space in the flash of the target device to install all the requested
+packages then the OpenWRT ImageBuilder silently skips that target. Remove
+some packages from the build and try again.
