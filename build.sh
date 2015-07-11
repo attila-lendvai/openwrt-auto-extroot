@@ -25,8 +25,8 @@ fi
 BUILD=`dirname "$0"`"/build/"
 BUILD=`absolutize $BUILD`
 IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
-IMGBUILDERDIR="${BUILD}/OpenWrt-ImageBuilder-15.05-rc1-ar71xx-generic.Linux-x86_64"
-IMGBUILDERURL="https://downloads.openwrt.org/chaos_calmer/15.05-rc1/ar71xx/generic/OpenWrt-ImageBuilder-15.05-rc1-ar71xx-generic.Linux-x86_64.tar.bz2"
+IMGBUILDERDIR="${BUILD}/OpenWrt-ImageBuilder-15.05-rc2-ar71xx-generic.Linux-x86_64"
+IMGBUILDERURL="https://downloads.openwrt.org/chaos_calmer/15.05-rc2/ar71xx/generic/OpenWrt-ImageBuilder-15.05-rc2-ar71xx-generic.Linux-x86_64.tar.bz2"
 
 PREINSTALLED_PACKAGES="wireless-tools firewall iptables"
 PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
@@ -36,9 +36,10 @@ PREINSTALLED_PACKAGES+=" luci"
 mkdir --parents ${BUILD}
 
 rm -rf $IMGTEMPDIR
-cp -r image-extras $IMGTEMPDIR
-if [ -e image-extras.$TARGET_PLATFORM/ ]; then
-    rsync -pr image-extras.$TARGET_PLATFORM/ $IMGTEMPDIR/
+cp -r image-extras/common $IMGTEMPDIR
+PER_PLATFORM_IMAGE_EXTRAS=image-extras/${TARGET_PLATFORM}/
+if [ -e $PER_PLATFORM_IMAGE_EXTRAS ]; then
+    rsync -pr $PER_PLATFORM_IMAGE_EXTRAS $IMGTEMPDIR/
 fi
 
 if [ ! -e ${IMGBUILDERDIR} ]; then
