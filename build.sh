@@ -28,18 +28,20 @@ IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
 IMGBUILDERDIR="${BUILD}/OpenWrt-ImageBuilder-15.05-ar71xx-generic.Linux-x86_64"
 IMGBUILDERURL="https://downloads.openwrt.org/chaos_calmer/15.05/ar71xx/generic/OpenWrt-ImageBuilder-15.05-ar71xx-generic.Linux-x86_64.tar.bz2"
 
-# the minimally needed packages for the proper functioning of the auto extroot machinery.
-# kmod-fs-ext4  225k
-# e2fsprogs     182k
-# fdisk         100k
-# the rest are around 20-30k
-PREINSTALLED_PACKAGES="blkid block-mount kmod-usb2 kmod-usb-storage mount-utils swap-utils e2fsprogs kmod-fs-ext4 fdisk"
+# the absolute minimum for extroot to work at all (i.e. when the disk is already set up, for example by hand).
+# this list may be smaller and/or different for your router, but it works with my ar71xx.
+PREINSTALLED_PACKAGES="block-mount kmod-usb2 kmod-usb-storage kmod-fs-ext4"
+
+# some kernel modules may also be needed for your hardware
+#PREINSTALLED_PACKAGES+=" kmod-usb-uhci kmod-usb-ohci"
+
+# these are needed for the proper functioning of the auto extroot scripts
+PREINSTALLED_PACKAGES+=" blkid mount-utils swap-utils e2fsprogs fdisk"
 
 # the following packages are optional, feel free to (un)comment them
 PREINSTALLED_PACKAGES+=" wireless-tools firewall iptables"
 PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
 PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
-PREINSTALLED_PACKAGES+=" kmod-usb-uhci kmod-usb-ohci"
 PREINSTALLED_PACKAGES+=" luci"
 
 mkdir --parents ${BUILD}
