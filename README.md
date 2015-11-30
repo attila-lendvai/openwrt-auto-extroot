@@ -79,7 +79,8 @@ on a TP-Link WDR4300.
 
 # Troubleshooting
 
-* If the build doesn't yield a firmware file: if there's not enough
-space in the flash of the target device to install all the requested
-packages then the OpenWRT ImageBuilder silently skips that target. Remove
-some packages from the build and try again.
+* If the build doesn't yield a firmware file (```*-factory.bin``` and/or ```*-sysupgrade.bin```):
+when there's not enough space in the flash of the target device to install everything
+then the OpenWRT ImageBuilder prints a hardly visible error and skips that target.
+Look into [build.sh](build.sh#L31) and try to remove some packages that you can live
+without.
