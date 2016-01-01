@@ -1,9 +1,10 @@
 # What
 
 It's a script to build a customized OpenWRT firmware image
-(basic familiarity with OpenWRT is assumed).
+(basic familiarity with [OpenWRT](https://wiki.openwrt.org/doc/howto/user.beginner)
+is assumed).
 
-If this image is flashed on a device it will try to automatically
+If the generated image is flashed on a device it will try to automatically
 set up [extroot](http://wiki.openwrt.org/doc/howto/extroot) on **any
 (!)** storage device plugged into the USB port (`/dev/sda`). Keep in
 mind that **this will erase any inserted storage device while the
@@ -79,8 +80,27 @@ on a TP-Link WDR4300.
 
 # Troubleshooting
 
-* If the build doesn't yield a firmware file (```*-factory.bin``` and/or ```*-sysupgrade.bin```):
-when there's not enough space in the flash of the target device to install everything
-then the OpenWRT ImageBuilder prints a hardly visible error and skips that target.
-Look into [build.sh](build.sh#L31) and try to remove some packages that you can live
-without.
+## Which file should I flash?
+
+You should consult the [OpenWRT documentation](https://wiki.openwrt.org/doc/howto/user.beginner).
+The produced firmware files should be somewhere around ```build/OpenWrt-ImageBuilder-15.05-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
+
+In short:
+
+* You need a file with the name ```-factory.bin``` or ```-sysupgrade.bin```. The former is to
+  be used when you first install OpenWRT, the latter is when you upgrade an already installed
+  OpenWRT.
+
+* You must carefully pick the proper firmware file for your **hardware version**! I advise you
+  to look up the wiki page for your hardware on the [OpenWRT wiki](https://wiki.openwrt.org),
+  because most of them have a table of the released hardawre versions with comments on their
+  status (sometimes new hardware revisions are only supported by the latest OpenWRT, which is
+  not released yet).
+
+## Help, the build has finished but there's no firmware file!
+
+If the build doesn't yield a firmware file (```*-factory.bin``` and/or ```*-sysupgrade.bin```):
+when there's not enough space in the flash memory of the target device to install everything
+then the OpenWRT ImageBuilder prints a hardly visible error into its flow of output and
+silently continues. Look into [build.sh](build.sh#L31) and try to remove some packages
+that you can live without.
