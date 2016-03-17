@@ -24,9 +24,12 @@ fi
 
 BUILD=`dirname "$0"`"/build/"
 BUILD=`absolutize $BUILD`
+
+RELEASE="15.05"
 IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
-IMGBUILDERDIR="${BUILD}/OpenWrt-ImageBuilder-15.05-ar71xx-generic.Linux-x86_64"
-IMGBUILDERURL="https://downloads.openwrt.org/chaos_calmer/15.05/ar71xx/generic/OpenWrt-ImageBuilder-15.05-ar71xx-generic.Linux-x86_64.tar.bz2"
+IMGBUILDERDIR="${BUILD}/OpenWrt-ImageBuilder-${RELEASE}-ar71xx-generic.Linux-x86_64"
+IMGBUILDERARCHIVE="OpenWrt-ImageBuilder-${RELEASE}-ar71xx-generic.Linux-x86_64"
+IMGBUILDERURL="https://downloads.openwrt.org/chaos_calmer/${RELEASE}/ar71xx/generic/${IMGBUILDERARCHIVE}"
 
 # the absolute minimum for extroot to work at all (i.e. when the disk is already set up, for example by hand).
 # this list may be smaller and/or different for your router, but it works with my ar71xx.
@@ -56,7 +59,7 @@ fi
 if [ ! -e ${IMGBUILDERDIR} ]; then
     pushd ${BUILD}
     wget --continue ${IMGBUILDERURL}
-    tar jvxf OpenWrt-ImageBuilder*.tar.bz2
+    tar jvxf ${IMGBUILDERARCHIVE}
     popd
 fi
 
