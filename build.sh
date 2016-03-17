@@ -28,7 +28,7 @@ BUILD=`absolutize $BUILD`
 RELEASE="15.05"
 IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
 IMGBUILDERDIR="${BUILD}/OpenWrt-ImageBuilder-${RELEASE}-ar71xx-generic.Linux-x86_64"
-IMGBUILDERARCHIVE="OpenWrt-ImageBuilder-${RELEASE}-ar71xx-generic.Linux-x86_64"
+IMGBUILDERARCHIVE="OpenWrt-ImageBuilder-${RELEASE}-ar71xx-generic.Linux-x86_64.tar.bz2"
 IMGBUILDERURL="https://downloads.openwrt.org/chaos_calmer/${RELEASE}/ar71xx/generic/${IMGBUILDERARCHIVE}"
 
 # the absolute minimum for extroot to work at all (i.e. when the disk is already set up, for example by hand).
