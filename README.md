@@ -97,7 +97,7 @@ In short:
   status (sometimes new hardware revisions are only supported by the latest OpenWRT, which is
   not released yet).
 
-## Help, the build has finished but there's no firmware file!
+## Help! The build has finished but there's no firmware file!
 
 If the build doesn't yield a firmware file (```*-factory.bin``` and/or ```*-sysupgrade.bin```):
 when there's not enough space in the flash memory of the target device to install everything
