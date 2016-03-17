@@ -10,7 +10,7 @@ getPendriveSize()
     # details: https://dev.openwrt.org/ticket/10716#comment:4
     if [ -e /dev/sda ]; then
         # force re-read of the partition table
-        head /dev/sda >/dev/null
+        head -c 10 /dev/sda >/dev/null
     fi
 
     if (grep -q sda /proc/partitions) then
