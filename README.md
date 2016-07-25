@@ -20,11 +20,15 @@ from our webapp.
 # How
 ### Building
 
-e.g. `./build.sh TLWDR4300`
+To build issue the following command: `./build.sh architecture variant device-profile`, e.g.:
+* `./build.sh ar71xx generic TLWDR4300`
+* `./build.sh ramips mt7621 ZBT-WG3526`
 
-Results will be under `build/OpenWrt-ImageBuilder-ar71xx_generic-for-linux-x86_64`.
+Results will be under `build/OpenWrt-ImageBuilder-${architecture}_${variant}-for-linux-x86_64/bin/`.
 
-To see a list of available targets, run this in the ImageBuilder dir: ```make info```.
+To see a list of available targets, run this in the ImageBuilder dir: `make info`.
+
+If you want to change which OpenWRT version is used, then edit the relevant variables in `build.sh` (`RELEASE`, and `RELEASE_NAME`).
 
 ### Setup stages
 
