@@ -15,21 +15,41 @@ absolutize ()
   popd >/dev/null
 }
 
-TARGET_PLATFORM=$1
-
-if [ -z ${TARGET_PLATFORM} ]; then
-    echo "Usage: $0 target-platform (e.g. 'TLWDR4300')"
-    kill -INT $$
-fi
+TARGET_ARCHITECTURE=$1
+TARGET_VARIANT=$2
+TARGET_DEVICE=$3
 
 BUILD=`dirname "$0"`"/build/"
 BUILD=`absolutize $BUILD`
 
+###
+### chose a release
+###
+RELEASE_NAME="chaos_calmer"
 RELEASE="15.05"
+
+#RELEASE_NAME="snapshots"
+#RELEASE="trunk"
+
+if [ $RELEASE = "trunk" ]; then
+    IMGBUILDER_NAME="OpenWrt-ImageBuilder-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
+else
+    IMGBUILDER_NAME="OpenWrt-ImageBuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
+fi
+IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
+IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.bz2"
+
 IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
-IMGBUILDERDIR="${BUILD}/OpenWrt-ImageBuilder-${RELEASE}-ar71xx-generic.Linux-x86_64"
-IMGBUILDERARCHIVE="OpenWrt-ImageBuilder-${RELEASE}-ar71xx-generic.Linux-x86_64.tar.bz2"
-IMGBUILDERURL="https://downloads.openwrt.org/chaos_calmer/${RELEASE}/ar71xx/generic/${IMGBUILDERARCHIVE}"
+IMGBUILDERURL="https://downloads.openwrt.org/${RELEASE_NAME}/${RELEASE}/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"
+
+if [ -z ${TARGET_DEVICE} ]; then
+    echo "Usage: $0 architecture variant device-profile"
+    echo " e.g.: $0 ar71xx generic TLWDR4300"
+    echo "       $0 ramips mt7621 ZBT-WG3526"
+    echo " to get a list of supported devices issue a 'make info' in the OpenWRT image builder directory:"
+    echo "   '${IMGBUILDER_DIR}'"
+    kill -INT $$
+fi
 
 # the absolute minimum for extroot to work at all (i.e. when the disk is already set up, for example by hand).
 # this list may be smaller and/or different for your router, but it works with my ar71xx.
@@ -51,23 +71,24 @@ mkdir --parents ${BUILD}
 
 rm -rf $IMGTEMPDIR
 cp -r image-extras/common/ $IMGTEMPDIR
-PER_PLATFORM_IMAGE_EXTRAS=image-extras/${TARGET_PLATFORM}/
+PER_PLATFORM_IMAGE_EXTRAS=image-extras/${TARGET_DEVICE}/
 if [ -e $PER_PLATFORM_IMAGE_EXTRAS ]; then
     rsync -pr $PER_PLATFORM_IMAGE_EXTRAS $IMGTEMPDIR/
 fi
 
-if [ ! -e ${IMGBUILDERDIR} ]; then
+if [ ! -e ${IMGBUILDER_DIR} ]; then
     pushd ${BUILD}
-    wget --continue ${IMGBUILDERURL}
-    tar jvxf ${IMGBUILDERARCHIVE}
+    # --no-check-certificate if needed
+    wget  --continue ${IMGBUILDERURL}
+    tar jvxf ${IMGBUILDER_ARCHIVE}
     popd
 fi
 
-pushd ${IMGBUILDERDIR}
+pushd ${IMGBUILDER_DIR}
 
-make image PROFILE=${TARGET_PLATFORM} PACKAGES="${PREINSTALLED_PACKAGES}" FILES=${IMGTEMPDIR}
+make image PROFILE=${TARGET_DEVICE} PACKAGES="${PREINSTALLED_PACKAGES}" FILES=${IMGTEMPDIR}
 
-pushd bin/ar71xx/
+pushd bin/${TARGET_ARCHITECTURE}/
 ln -s ../../packages .
 popd
 
