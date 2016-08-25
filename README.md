@@ -1,6 +1,6 @@
 # What
 
-It's a script to build a customized OpenWRT firmware image
+It's a script to build a customized OpenWRT firmware image on a Linux x86_64 host
 (basic familiarity with [OpenWRT](https://wiki.openwrt.org/doc/howto/user.beginner)
 is assumed).
 
