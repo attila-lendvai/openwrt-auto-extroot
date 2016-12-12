@@ -25,27 +25,30 @@ BUILD=`absolutize $BUILD`
 ###
 ### chose a release
 ###
-RELEASE_NAME="chaos_calmer"
-RELEASE="15.05"
+#RELEASE_NAME="chaos_calmer"
+#RELEASE="15.05.1"
 
-#RELEASE_NAME="snapshots"
-#RELEASE="trunk"
+RELEASE_NAME="snapshots"
+RELEASE="targets"
 
-if [ $RELEASE = "trunk" ]; then
-    IMGBUILDER_NAME="OpenWrt-ImageBuilder-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
+if [ $RELEASE = "targets" ]; then
+    # TODO clean up once a release comes out and the naming conventions becomes apparent
+    IMGBUILDER_NAME="lede-imagebuilder-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 else
-    IMGBUILDER_NAME="OpenWrt-ImageBuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
+    IMGBUILDER_NAME="lede-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 fi
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
-IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.bz2"
+IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.xz"
 
 IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
-IMGBUILDERURL="https://downloads.openwrt.org/${RELEASE_NAME}/${RELEASE}/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"
+#https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
+#https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
+IMGBUILDERURL="https://downloads.lede-project.org/${RELEASE_NAME}/${RELEASE}/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"
 
 if [ -z ${TARGET_DEVICE} ]; then
     echo "Usage: $0 architecture variant device-profile"
-    echo " e.g.: $0 ar71xx generic TLWDR4300"
-    echo "       $0 ramips mt7621 ZBT-WG3526"
+    echo " e.g.: $0 ar71xx generic tl-wr1043nd-v2"
+    echo "       $0 ramips mt7621 zbt-wg3526"
     echo " to get a list of supported devices issue a 'make info' in the OpenWRT image builder directory:"
     echo "   '${IMGBUILDER_DIR}'"
     kill -INT $$
@@ -80,7 +83,7 @@ if [ ! -e ${IMGBUILDER_DIR} ]; then
     pushd ${BUILD}
     # --no-check-certificate if needed
     wget  --continue ${IMGBUILDERURL}
-    tar jvxf ${IMGBUILDER_ARCHIVE}
+    xz -d <${IMGBUILDER_ARCHIVE} | tar vx
     popd
 fi
 
