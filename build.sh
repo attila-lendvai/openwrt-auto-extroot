@@ -25,25 +25,17 @@ BUILD=`absolutize $BUILD`
 ###
 ### chose a release
 ###
-#RELEASE_NAME="chaos_calmer"
 #RELEASE="15.05.1"
+RELEASE="17.01.1"
 
-RELEASE_NAME="snapshots"
-RELEASE="targets"
-
-if [ $RELEASE = "targets" ]; then
-    # TODO clean up once a release comes out and the naming conventions becomes apparent
-    IMGBUILDER_NAME="lede-imagebuilder-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
-else
-    IMGBUILDER_NAME="lede-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
-fi
+IMGBUILDER_NAME="lede-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
 IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.xz"
 
 IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
 #https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
 #https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
-IMGBUILDERURL="https://downloads.lede-project.org/${RELEASE_NAME}/${RELEASE}/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"
+IMGBUILDERURL="https://downloads.lede-project.org/releases/${RELEASE}/targets/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"
 
 if [ -z ${TARGET_DEVICE} ]; then
     echo "Usage: $0 architecture variant device-profile"
