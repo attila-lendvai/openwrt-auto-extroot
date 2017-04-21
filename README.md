@@ -18,10 +18,13 @@ So that e.g. customers can buy a router on their own, flash our custom
 firmware, plug in a pendrive, and manage their SIP (telephony) node
 from our webapp.
 
+I've extracted the generic parts from the above mentioned auto-provision
+project because I thought it's useful enough for making it public.
+
 # How
 ### Building
 
-To build issue the following command: `./build.sh architecture variant device-profile`, e.g.:
+To build it, issue the following command: `./build.sh architecture variant device-profile`, e.g.:
 * `./build.sh ar71xx generic tl-wdr4300-v1`
 
 Results will be under `build/lede-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
@@ -37,7 +40,7 @@ sources for details: [autoprovision-functions.sh](image-extras/common/root/autop
 
 #### Stage 1: setup extroot
 
-At the first boot after flashing the firmware the autoprovision script will
+When the custom firmware first boots, the autoprovision script will
 wait for anything (!) in `/dev/sda` to show up (that is >= 512M), then erase
 it and set up a `swap`, an `extroot`, and a `data`filesystem (for the remaining
 space), and then reboot.
@@ -46,7 +49,7 @@ space), and then reboot.
 
 Once it booted into the new extroot, it will continuously attempt to install
 some LEDE packages until an internet connection is set up on the router
-(either by using ssh or LuCI if you could fit it into the firmware).
+(either by using ssh or the web UI (LuCI)).
 
 ### Login
 
@@ -69,10 +72,6 @@ probably want to customize this script here and there; search for
 `CUSTOMIZE` for places of interest.
 
 Most importantly, **set up a password and maybe an ssh key**.
-
-I've extracted this from a project of mine where OpenWRT nodes auto-provision
-themselves in 3 stages (stage 3 was a Python script for an app-level sync feature),
-but I thought it's useful enough for making it public.
 
 At the time of writing it only supports a few `ar71xx` routers out of the box,
 but it's easy to extend it.
