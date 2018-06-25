@@ -24,13 +24,13 @@ project because I thought it's useful enough for making it public.
 ### Building
 
 To build it, issue the following command: `./build.sh architecture variant device-profile`, e.g.:
-* `./build.sh ar71xx generic tl-wdr4300-v1`
+* `./build.sh ar71xx generic tl-wr1043nd-v2`
 
 Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
 
 To see a list of available targets, run `make info` in the ImageBuilder dir.
 
-If you want to change which LEDE version is used, then edit the relevant variable(s) in `build.sh`.
+If you want to change which OpenWRT version is used, then edit the relevant variable(s) in `build.sh`.
 
 ### Setup stages
 
@@ -47,7 +47,7 @@ space), and then reboot.
 #### Stage 2: download and install some packages from the internet
 
 Once it booted into the new extroot, it will continuously attempt to install
-some LEDE packages until an internet connection is set up on the router
+some OpenWRT packages until an internet connection is set up on the router
 (either by using ssh or the web UI (LuCI)).
 
 ### Login
@@ -59,7 +59,7 @@ By default the root passwd is not set, so the router will start telnet with
 no password. If you want to set up a password, then edit the stage 2 script:
 [autoprovision-stage2.sh](image-extras/common/root/autoprovision-stage2.sh#L53).
 
-If a password is set, then telnet is disabled by LEDE and SSH will listen
+If a password is set, then telnet is disabled by OpenWRT and SSH will listen
 using the keys specified in [authorized_keys](image-extras/common/etc/dropbear/authorized_keys).
 
 Once connected, you can read the log with `logread -f`.
@@ -77,7 +77,7 @@ but it's easy to extend it.
 
 ## Tested with
 
-[LEDE 17.01.1](https://downloads.openwrt.org/snapshots/)
+[OpenWRT 17.01.4](https://downloads.openwrt.org/releases/)
 on a TP-Link WR-1043nd-v2.
 
 # Troubleshooting
@@ -90,19 +90,19 @@ The produced firmware files should be somewhere around ```build/openwrt-imagebui
 In short:
 
 * You need a file with the name ```-factory.bin``` or ```-sysupgrade.bin```. The former is to
-  be used when you first install LEDE, the latter is when you upgrade an already installed
-  LEDE.
+  be used when you first install OpenWRT, the latter is when you upgrade an already installed
+  OpenWRT.
 
 * You must carefully pick the proper firmware file for your **hardware version**! I advise you
   to look up the wiki page for your hardware on the [OpenWRT wiki](https://wiki.openwrt.org),
   because most of them have a table of the released hardawre versions with comments on their
-  status (sometimes new hardware revisions are only supported by the latest LEDE, which is
+  status (sometimes new hardware revisions are only supported by the latest OpenWRT, which is
   not released yet).
 
 ## Help! The build has finished but there's no firmware file!
 
 If the build doesn't yield a firmware file (```*-factory.bin``` and/or ```*-sysupgrade.bin```):
 when there's not enough space in the flash memory of the target device to install everything
-then the LEDE ImageBuilder prints a hardly visible error into its flow of output and
+then the OpenWRT ImageBuilder prints a hardly visible error into its flow of output and
 silently continues. Look into [build.sh](build.sh#L31) and try to remove some packages
 that you can live without.
