@@ -1,9 +1,8 @@
 # What
 
-It's a script to build a customized [LEDE](https://lede-project.org/)
+It's a script to build a customized [OpenWRT](https://openwrt.org/)
 firmware image using a Linux x86_64 host (basic familiarity with
-[LEDE](https://lede-project.org/) is assumed). LEDE is a fork of
-[OpenWRT](https://openwrt.org/).
+[OpenWRT](https://openwrt.org/) is assumed).
 
 If the generated image is flashed on a device it will try to automatically
 set up [extroot](http://wiki.openwrt.org/doc/howto/extroot) on **any
@@ -27,7 +26,7 @@ project because I thought it's useful enough for making it public.
 To build it, issue the following command: `./build.sh architecture variant device-profile`, e.g.:
 * `./build.sh ar71xx generic tl-wdr4300-v1`
 
-Results will be under `build/lede-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
+Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
 
 To see a list of available targets, run `make info` in the ImageBuilder dir.
 
@@ -78,16 +77,15 @@ but it's easy to extend it.
 
 ## Tested with
 
-[LEDE 17.01.1](https://downloads.lede-project.org/releases/17.01.1/)
-on a TP-Link WDR4300.
+[LEDE 17.01.1](https://downloads.openwrt.org/snapshots/)
+on a TP-Link WR-1043nd-v2.
 
 # Troubleshooting
 
 ## Which file should I flash?
 
-You should consult the documentation at [LEDE](https://lede-project.org/docs/start) and/or at
-[OpenWRT](https://wiki.openwrt.org/doc/howto/user.beginner).
-The produced firmware files should be somewhere around ```build/lede-imagebuilder-17.01.1-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
+You should consult the documentation at [OpenWRT](https://wiki.openwrt.org/doc/howto/user.beginner).
+The produced firmware files should be somewhere around ```build/openwrt-imagebuilder-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
 
 In short:
 
