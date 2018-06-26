@@ -32,7 +32,7 @@ IMGBUILDER_NAME="lede-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VA
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
 IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.xz"
 
-IMGTEMPDIR="${BUILD}/openwrt-build-image-extras"
+IMGTEMPDIR="${BUILD}/image-extras"
 #https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
 #https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
 IMGBUILDERURL="https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"

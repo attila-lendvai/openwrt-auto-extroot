@@ -1,8 +1,8 @@
 # What
 
-It's a script to build a customized [OpenWRT](https://openwrt.org/)
-firmware image using a Linux x86_64 host (basic familiarity with
-[OpenWRT](https://openwrt.org/) is assumed).
+It's a script to build a customized OpenWRT firmware image on a Linux x86_64 host
+(basic familiarity with [OpenWRT](https://wiki.openwrt.org/doc/howto/user.beginner)
+is assumed).
 
 If the generated image is flashed on a device it will try to automatically
 set up [extroot](http://wiki.openwrt.org/doc/howto/extroot) on **any
@@ -84,8 +84,8 @@ on a TP-Link WR-1043nd-v2.
 
 ## Which file should I flash?
 
-You should consult the documentation at [OpenWRT](https://wiki.openwrt.org/doc/howto/user.beginner).
-The produced firmware files should be somewhere around ```build/openwrt-imagebuilder-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
+You should consult the [OpenWRT documentation](https://wiki.openwrt.org/doc/howto/user.beginner).
+The produced firmware files should be somewhere around ```build/openwrt-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
 
 In short:
 
@@ -95,7 +95,7 @@ In short:
 
 * You must carefully pick the proper firmware file for your **hardware version**! I advise you
   to look up the wiki page for your hardware on the [OpenWRT wiki](https://wiki.openwrt.org),
-  because most of them have a table of the released hardawre versions with comments on their
+  because most of them have a table of the released hardware versions with comments on their
   status (sometimes new hardware revisions are only supported by the latest OpenWRT, which is
   not released yet).
 
