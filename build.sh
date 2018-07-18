@@ -25,7 +25,6 @@ BUILD=`absolutize $BUILD`
 ###
 ### chose a release
 ###
-#RELEASE="15.05.1"
 RELEASE="17.01.4"
 
 IMGBUILDER_NAME="lede-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
@@ -41,6 +40,8 @@ if [ -z ${TARGET_DEVICE} ]; then
     echo "Usage: $0 architecture variant device-profile"
     echo " e.g.: $0 ar71xx generic tl-wr1043nd-v2"
     echo "       $0 ramips mt7621 zbt-wg3526"
+    echo "       $0 bcm53xx generic dlink-dir-885l"
+    echo "       (this last one will not work without editing build.sh, details: https://github.com/attila-lendvai/openwrt-auto-extroot/pull/15#issuecomment-405847440)"
     echo " to get a list of supported devices issue a 'make info' in the OpenWRT image builder directory:"
     echo "   '${IMGBUILDER_DIR}'"
     kill -INT $$
@@ -74,7 +75,7 @@ fi
 if [ ! -e ${IMGBUILDER_DIR} ]; then
     pushd ${BUILD}
     # --no-check-certificate if needed
-    wget  --continue ${IMGBUILDERURL}
+    wget --continue ${IMGBUILDERURL}
     xz -d <${IMGBUILDER_ARCHIVE} | tar vx
     popd
 fi
