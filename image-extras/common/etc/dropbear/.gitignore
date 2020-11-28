@@ -1,0 +1,3 @@
+# you can put your ssh public key into authorized_keys,
+# but we don't ever want it to be committed to the repo
+authorized_keys

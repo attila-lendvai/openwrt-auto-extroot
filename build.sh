@@ -2,25 +2,12 @@
 
 set -e
 
-absolutize ()
-{
-  if [ ! -d "$1" ]; then
-    echo
-    echo "ERROR: '$1' doesn't exist or not a directory!"
-    kill -INT $$
-  fi
-
-  pushd "$1" >/dev/null
-  echo `pwd`
-  popd >/dev/null
-}
-
 TARGET_ARCHITECTURE=$1
 TARGET_VARIANT=$2
 TARGET_DEVICE=$3
 
 BUILD=`dirname "$0"`"/build/"
-BUILD=`absolutize $BUILD`
+BUILD=`readlink -f $BUILD`
 
 ###
 ### chose a release
