@@ -12,7 +12,7 @@ BUILD=`readlink -f $BUILD`
 ###
 ### chose a release
 ###
-RELEASE="18.06.1"
+RELEASE="19.07.4"
 
 IMGBUILDER_NAME="openwrt-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
