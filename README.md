@@ -66,26 +66,25 @@ Once connected, you can read the log with `logread -f`.
 
 # Status
 
-This is more of a template than something standalone. You most
+This is more of a template than something standalone, but I use it for
+my home routers as is. You most
 probably want to customize this script here and there; search for
 `CUSTOMIZE` for places of interest.
 
 Most importantly, **set up a password and maybe an ssh key**.
 
 At the time of writing it only supports a few `ar71xx` routers out of the box,
-but it's easy to extend it.
-
-## Tested with
-
-[OpenWRT 17.01.4](https://downloads.openwrt.org/releases/)
-on a TP-Link WR-1043nd-v2.
+but it's easy to extend it. Support for a new router entails looking up
+some led names for setLedAttribute for the user feedback through the blinking of
+the leds, but it should still work without that.
 
 # Troubleshooting
 
 ## Which file should I flash?
 
 You should consult the [OpenWRT documentation](https://wiki.openwrt.org/doc/howto/user.beginner).
-The produced firmware files should be somewhere around ```build/openwrt-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
+The produced firmware files should be somewhere around
+```build/openwrt-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
 
 In short:
 

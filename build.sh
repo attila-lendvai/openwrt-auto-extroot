@@ -19,6 +19,9 @@ IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
 IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.xz"
 
 IMGTEMPDIR="${BUILD}/image-extras"
+# see this feature request:
+# FS#1670 - consistent naming convention for the imagebuilder.tar.xz URL
+# https://bugs.openwrt.org/index.php?do=details&task_id=1670
 IMGBUILDERURL="https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"
 
 if [ -z ${TARGET_DEVICE} ]; then
