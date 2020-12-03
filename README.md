@@ -1,12 +1,12 @@
 # What
 
 It's a script to build a customized OpenWRT firmware image on a Linux x86_64 host
-(basic familiarity with [OpenWRT](https://wiki.openwrt.org/doc/howto/user.beginner)
+(basic familiarity with [OpenWRT](https://openwrt.org/docs/guide-user/start)
 is assumed).
 
-If the generated image is flashed on a device it will try to automatically
-set up [extroot](http://wiki.openwrt.org/doc/howto/extroot) on **any
-(!)** storage device plugged into the USB port (`/dev/sda`). Keep in
+If the generated image is flashed on a device it will try to automatically set up
+[extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration)
+on **any (!)** storage device plugged into the USB port (`/dev/sda`). Keep in
 mind that **this will erase any inserted storage device while the
 router is in the initial setup phase**! Unfortunately there's little
 that can be done at that point to ask the user for confirmation.
@@ -21,6 +21,16 @@ I've extracted the generic parts from the above mentioned auto-provision
 project because I thought it's useful enough for making it public.
 
 # How
+
+You can read more about the underlying technology on the OpenWRT wiki. See e.g. the
+[ImageBuilder](https://openwrt.org/docs/guide-user/additional-software/imagebuilder)
+page, and the page that lists some other
+[ImageBuilder frontends](https://openwrt.org/docs/guide-developer/imagebuilder_frontends).
+
+As for the actual mechanism: custom scripts are baked into the firmware that are
+hidden by the successfully mounted extroot; i.e. they will only run when the extroot
+has failed to mount properly.
+
 ### Building
 
 To build it, issue the following command: `./build.sh architecture variant device-profile`, e.g.:
@@ -30,7 +40,8 @@ Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${v
 
 To see a list of available targets, run `make info` in the ImageBuilder dir.
 
-If you want to change which OpenWRT version is used, then edit the relevant variable(s) in `build.sh`.
+If you want to change which OpenWRT version is used, then edit the relevant variable(s)
+in `build.sh`.
 
 ### Setup stages
 
@@ -76,13 +87,14 @@ Most importantly, **set up a password and maybe an ssh key**.
 At the time of writing it only supports a few `ar71xx` routers out of the box,
 but it's easy to extend it. Support for a new router entails looking up
 some led names for setLedAttribute for the user feedback through the blinking of
-the leds, but it should still work without that.
+the leds. It should work fine without that, but it will be less convenient to
+interact with your router in the initial setup phase.
 
 # Troubleshooting
 
 ## Which file should I flash?
 
-You should consult the [OpenWRT documentation](https://wiki.openwrt.org/doc/howto/user.beginner).
+You should consult the [OpenWRT documentation](https://openwrt.org/docs/guide-user/start).
 The produced firmware files should be somewhere around
 ```build/openwrt-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
 
@@ -93,7 +105,7 @@ In short:
   OpenWRT.
 
 * You must carefully pick the proper firmware file for your **hardware version**! I advise you
-  to look up the wiki page for your hardware on the [OpenWRT wiki](https://wiki.openwrt.org),
+  to look up the wiki page for your hardware on the [OpenWRT wiki](https://openwrt.org),
   because most of them have a table of the released hardware versions with comments on their
   status (sometimes new hardware revisions are only supported by the latest OpenWRT, which is
   not released yet).
