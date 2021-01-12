@@ -1,8 +1,9 @@
 # What
 
-It's a script to build a customized OpenWRT firmware image on a Linux x86_64 host
-(basic familiarity with [OpenWRT](https://openwrt.org/docs/guide-user/start)
-is assumed).
+It's a script to build a customized
+[OpenWRT](https://openwrt.org/docs/guide-user/start)
+firmware image using
+[ImageBuilder](https://openwrt.org/docs/guide-user/additional-software/imagebuilder).
 
 If the generated image is flashed on a device it will try to automatically set up
 [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration)
@@ -22,18 +23,20 @@ project because I thought it's useful enough for making it public.
 
 # How
 
-You can read more about the underlying technology on the OpenWRT wiki. See e.g. the
+You can read more about the underlying technology on the OpenWRT wiki: see e.g. the
 [ImageBuilder](https://openwrt.org/docs/guide-user/additional-software/imagebuilder)
-page, and the page that lists some other
+page, or the page that lists some other
 [ImageBuilder frontends](https://openwrt.org/docs/guide-developer/imagebuilder_frontends).
 
-As for the actual mechanism: custom scripts are baked into the firmware that are
-hidden by the successfully mounted extroot; i.e. they will only run when the extroot
-has failed to mount properly.
+As for the actual mechanism: custom scripts are baked into the boot process of the
+flashed firmware. If the extroot overlay is properly set up, then these scripts get hidden by it;
+i.e. they will only run when the extroot has failed to mount early in the boot.
 
 ### Building
 
-To build it, issue the following command: `./build.sh architecture variant device-profile`, e.g.:
+OpenWRT's ImageBuilder only works on Linux x86_64. To build a firmware, issue the following command:
+`./build.sh architecture variant device-profile`, e.g.:
+
 * `./build.sh ar71xx generic tl-wr1043nd-v2`
 
 Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
@@ -57,9 +60,14 @@ space), and then reboot.
 
 #### Stage 2: download and install some packages from the internet
 
-Once it booted into the new extroot, it will continuously attempt to install
-some OpenWRT packages until an internet connection is set up on the router
-(either by using ssh or the web UI (LuCI)).
+Once it rebooted into the new extroot, it will continuously keep trying to install
+some OpenWRT packages until an internet connection is set up on the router. You
+need to do that manually either by using ssh or the web UI (LuCI).
+
+#### Stage 3, optional
+
+We also have a 3rd stage, written in Python, but it's commented out here.
+Search for `autoprovision-stage3.py` to see how it's done.
 
 ### Login
 
