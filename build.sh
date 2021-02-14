@@ -12,7 +12,7 @@ BUILD=`readlink -f $BUILD`
 ###
 ### chose a release
 ###
-RELEASE="19.07.4"
+RELEASE="19.07.6"
 
 IMGBUILDER_NAME="openwrt-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
@@ -26,8 +26,8 @@ IMGBUILDERURL="https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGE
 
 if [ -z ${TARGET_DEVICE} ]; then
     echo "Usage: $0 architecture variant device-profile"
-    echo " e.g.: $0 ar71xx generic tl-wr1043nd-v2"
-    echo "       $0 ramips mt7621 zbt-wg3526"
+    echo " e.g.: $0 ar71xx generic tplink_tl-wr1043nd-v1"
+    echo "       $0 ath79 generic tplink_archer-c6-v2"
     echo "       $0 bcm53xx generic dlink-dir-885l"
     echo "       (this last one will not work without editing build.sh, details: https://github.com/attila-lendvai/openwrt-auto-extroot/pull/15#issuecomment-405847440)"
     echo " to get a list of supported devices issue a 'make info' in the OpenWRT image builder directory:"

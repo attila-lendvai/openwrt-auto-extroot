@@ -37,7 +37,8 @@ i.e. they will only run when the extroot has failed to mount early in the boot.
 OpenWRT's ImageBuilder only works on Linux x86_64. To build a firmware, issue the following command:
 `./build.sh architecture variant device-profile`, e.g.:
 
-* `./build.sh ar71xx generic tl-wr1043nd-v2`
+* `./build.sh ar71xx generic tplink_tl-wr1043nd-v1`
+* `./build.sh ath79 generic tplink_archer-c6-v2`
 
 Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
 
