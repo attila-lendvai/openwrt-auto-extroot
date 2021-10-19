@@ -10,33 +10,34 @@ rootUUID=05d615b3-bef8-460c-9a23-52db8d09e000
 dataUUID=05d615b3-bef8-460c-9a23-52db8d09e001
 swapUUID=05d615b3-bef8-460c-9a23-52db8d09e002
 
-if [ -f /lib/ar71xx.sh ]; then
-   . /lib/ar71xx.sh
+. /lib/functions.sh
 
-   # let's attempt to define some defaults...
-   autoprovisionUSBLed="tp-link:green:usb"
-   autoprovisionStatusLed="tp-link:green:qss"
+# let's attempt to define some defaults...
+autoprovisionUSBLed="green:usb"
+autoprovisionStatusLed="green:qss"
 
-   # CUSTOMIZE
-   case $(ar71xx_board_name) in
-       "tl-wr1043nd")
-           autoprovisionUSBLed="tp-link:green:usb"
-           autoprovisionStatusLed="tp-link:green:qss"
-           ;;
-       "tl-mr3020")
-           autoprovisionUSBLed="tp-link:green:wps"
-           autoprovisionStatusLed="tp-link:green:wlan"
-           ;;
-       "tl-wr2543n")
-           autoprovisionUSBLed="tp-link:green:wps"
-           autoprovisionStatusLed="tp-link:green:wlan5g"
-           ;;
-       "tl-wdr4300")
-           autoprovisionUSBLed="tp-link:blue:wan"
-           autoprovisionStatusLed="tp-link:blue:qss"
-           ;;
-   esac
-fi
+echo Board name is [$(board_name)]
+
+# CUSTOMIZE
+case $(board_name) in
+    *tl-wr1043nd*)
+        autoprovisionUSBLed="green:usb"
+        autoprovisionStatusLed="green:qss"
+        ;;
+    *tl-mr3020*)
+        autoprovisionUSBLed="green:wps"
+        autoprovisionStatusLed="green:wlan"
+        ;;
+    *tl-wr2543n*)
+        autoprovisionUSBLed="green:wps"
+        autoprovisionStatusLed="green:wlan5g"
+        ;;
+    *tl-wdr4300*)
+        autoprovisionUSBLed="green:wlan2g"
+        autoprovisionStatusLed="green:wlan5g"
+        ;;
+esac
+
 
 log()
 {

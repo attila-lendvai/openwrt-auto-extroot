@@ -73,8 +73,8 @@ EOF
     done
 
     mkswap -L swap -U $swapUUID /dev/sda1
-    mkfs.ext4 -L root -U $rootUUID /dev/sda2
-    mkfs.ext4 -L data -U $dataUUID /dev/sda3
+    mkfs.ext4 -F -L root -U $rootUUID /dev/sda2
+    mkfs.ext4 -F -L data -U $dataUUID /dev/sda3
 
     log "Finished setting up filesystems"
 }

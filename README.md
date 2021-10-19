@@ -5,12 +5,15 @@ It's a script to build a customized
 firmware image using
 [ImageBuilder](https://openwrt.org/docs/guide-user/additional-software/imagebuilder).
 
-If the generated image is flashed on a device it will try to automatically set up
+If the generated image is flashed on a device it will try to
+automatically set up
 [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration)
-on **any (!)** storage device plugged into the USB port (`/dev/sda`). Keep in
-mind that **this will erase any inserted storage device while the
-router is in the initial setup phase**! Unfortunately there's little
-that can be done at that point to ask the user for confirmation.
+on **any (!)** storage device plugged into the USB port (`/dev/sda`),
+including your working extroot pendrive if you plug it in only later
+in the boot process. Keep in mind that **this will erase any inserted
+storage device while the router is in the initial setup phase**!
+Unfortunately there's little that can be done at that point to ask the
+user for confirmation.
 
 # Why
 
@@ -28,17 +31,19 @@ You can read more about the underlying technology on the OpenWRT wiki: see e.g. 
 page, or the page that lists some other
 [ImageBuilder frontends](https://openwrt.org/docs/guide-developer/imagebuilder_frontends).
 
-As for the actual mechanism: custom scripts are baked into the boot process of the
-flashed firmware. If the extroot overlay is properly set up, then these scripts get hidden by it;
-i.e. they will only run when the extroot has failed to mount early in the boot.
+As for the actual mechanism: custom scripts are baked into the boot
+process of the flashed firmware. If the extroot overlay is properly
+set up, then these scripts get hidden by it; i.e. they will only run
+when the extroot has failed to mount early in the boot process.
 
 ### Building
 
 OpenWRT's ImageBuilder only works on Linux x86_64. To build a firmware, issue the following command:
 `./build.sh architecture variant device-profile`, e.g.:
 
-* `./build.sh ar71xx generic tplink_tl-wr1043nd-v1`
+* `./build.sh ath79 generic tplink_tl-wr1043nd-v1`
 * `./build.sh ath79 generic tplink_archer-c6-v2`
+* `./build.sh ath79 generic tplink_tl-wdr4300-v1`
 
 Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
 
@@ -93,11 +98,12 @@ probably want to customize this script here and there; search for
 
 Most importantly, **set up a password and maybe an ssh key**.
 
-At the time of writing it only supports a few `ar71xx` routers out of the box,
-but it's easy to extend it. Support for a new router entails looking up
-some led names for setLedAttribute for the user feedback through the blinking of
-the leds. It should work fine without that, but it will be less convenient to
-interact with your router in the initial setup phase.
+At the time of writing it only supports a few `ath79` routers out of
+the box, but it's easy to extend it. Support for a new router entails
+looking up some led names for `setLedAttribute` so that there's
+feedback to the user through the blinking of the leds. It should work
+fine without that, but it will be less convenient to interact with
+your router in the initial setup phase.
 
 # Troubleshooting
 
@@ -105,7 +111,7 @@ interact with your router in the initial setup phase.
 
 You should consult the [OpenWRT documentation](https://openwrt.org/docs/guide-user/start).
 The produced firmware files should be somewhere around
-```build/openwrt-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64/bin/ar71xx```.
+```./build/openwrt-imagebuilder-21.02.0-ath79-generic.Linux-x86_64/bin/targets/ath79/generic/```.
 
 In short:
 
