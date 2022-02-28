@@ -29,7 +29,7 @@ if [ -z ${TARGET_DEVICE} ]; then
     echo " e.g.: $0 ath79 generic tplink_tl-wr1043nd-v1"
     echo "       $0 ath79 generic tplink_archer-c6-v2"
     echo "       $0 ath79 generic tplink_tl-wdr4300-v1"
-    echo "       $0 bcm53xx generic dlink-dir-885l"
+    echo "       $0 bcm53xx generic dlink_dir-885l"
     echo "       (this last one will not work without editing build.sh, details: https://github.com/attila-lendvai/openwrt-auto-extroot/pull/15#issuecomment-405847440)"
     echo " to get a list of supported devices issue a 'make info' in the OpenWRT image builder directory:"
     echo "   '${IMGBUILDER_DIR}'"

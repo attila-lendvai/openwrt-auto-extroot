@@ -44,6 +44,7 @@ OpenWRT's ImageBuilder only works on Linux x86_64. To build a firmware, issue th
 * `./build.sh ath79 generic tplink_tl-wr1043nd-v1`
 * `./build.sh ath79 generic tplink_archer-c6-v2`
 * `./build.sh ath79 generic tplink_tl-wdr4300-v1`
+* `./build.sh bcm53xx generic dlink_dir-885l`
 
 Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${variant}.Linux-x86_64/bin/`.
 
