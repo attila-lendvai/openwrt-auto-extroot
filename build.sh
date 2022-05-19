@@ -2,9 +2,10 @@
 
 set -e
 
-TARGET_ARCHITECTURE=$1
-TARGET_VARIANT=$2
-TARGET_DEVICE=$3
+RELEASE=$1
+TARGET_ARCHITECTURE=$2
+TARGET_VARIANT=$3
+TARGET_DEVICE=$4
 
 BUILD=`dirname "$0"`"/build/"
 BUILD=`readlink -f $BUILD`
@@ -12,7 +13,12 @@ BUILD=`readlink -f $BUILD`
 ###
 ### chose a release
 ###
-RELEASE="21.02.0"
+
+if [[ ! -n ${RELEASE} ]]; then
+	RELEASE="21.02.0"
+fi
+
+echo "Build release: ${RELEASE}"
 
 IMGBUILDER_NAME="openwrt-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
