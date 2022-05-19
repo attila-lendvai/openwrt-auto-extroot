@@ -30,10 +30,10 @@ installPackages()
 
     # CUSTOMIZE
     # install some more packages that don't need any extra steps
-    opkg install lua luci ppp-mod-pppoe screen mc zip unzip logrotate
+    # opkg install lua luci ppp-mod-pppoe screen mc zip unzip logrotate
 
     # this is needed for the vlans on tp-link 3020 with only a single hw ethernet port
-    opkg install kmod-macvlan ip
+    # opkg install kmod-macvlan ip
 
     # just in case if we were run in a firmware that didn't already had luci
     /etc/init.d/uhttpd enable
