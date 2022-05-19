@@ -63,11 +63,11 @@ mkdir -pv ${BUILD}
 rm -rf $IMGTEMPDIR
 cp -r image-extras/common/ $IMGTEMPDIR
 PER_PLATFORM_IMAGE_EXTRAS=image-extras/${TARGET_DEVICE}/
-if [ -e $PER_PLATFORM_IMAGE_EXTRAS ]; then
+if [[ -e $PER_PLATFORM_IMAGE_EXTRAS ]]; then
     rsync -pr $PER_PLATFORM_IMAGE_EXTRAS $IMGTEMPDIR/
 fi
 
-if [ ! -e ${IMGBUILDER_DIR} ]; then
+if [[ ! -e ${IMGBUILDER_DIR} ]]; then
     pushd ${BUILD}
     # --no-check-certificate if needed
     wget --continue ${IMGBUILDERURL}
