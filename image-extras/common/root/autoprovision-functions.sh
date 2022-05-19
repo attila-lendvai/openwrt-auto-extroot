@@ -36,6 +36,10 @@ case $(board_name) in
         autoprovisionUSBLed="green:wlan2g"
         autoprovisionStatusLed="green:wlan5g"
         ;;
+    *archer-c7-v1*)
+        autoprovisionUSBLed="green:wlan2g"
+        autoprovisionStatusLed="green:wlan5g"
+        ;;
 esac
 
 
