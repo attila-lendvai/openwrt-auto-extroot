@@ -30,17 +30,17 @@ IMGTEMPDIR="${BUILD}/image-extras"
 # https://bugs.openwrt.org/index.php?do=details&task_id=1670
 IMGBUILDERURL="https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET_ARCHITECTURE}/${TARGET_VARIANT}/${IMGBUILDER_ARCHIVE}"
 
-if [ -z ${TARGET_DEVICE} ]; then
-    echo "Usage: $0 architecture variant device-profile"
-    echo " e.g.: $0 ath79 generic tplink_tl-wr1043nd-v1"
-    echo "       $0 ath79 generic tplink_archer-c6-v2"
-    echo "       $0 ath79 generic tplink_tl-wdr4300-v1"
-    echo "       $0 bcm53xx generic dlink_dir-885l"
-    echo "       (this last one will not work without editing build.sh, details: https://github.com/attila-lendvai/openwrt-auto-extroot/pull/15#issuecomment-405847440)"
-    echo " to get a list of supported devices issue a 'make info' in the OpenWRT image builder directory:"
-    echo "   '${IMGBUILDER_DIR}'"
-    kill -INT $$
-fi
+#if [ -z ${TARGET_DEVICE} ]; then
+#    echo "Usage: $0 architecture variant device-profile"
+#    echo " e.g.: $0 ath79 generic tplink_tl-wr1043nd-v1"
+#    echo "       $0 ath79 generic tplink_archer-c6-v2"
+#    echo "       $0 ath79 generic tplink_tl-wdr4300-v1"
+#    echo "       $0 bcm53xx generic dlink_dir-885l"
+#    echo "       (this last one will not work without editing build.sh, details: https://github.com/attila-lendvai/openwrt-auto-extroot/pull/15#issuecomment-405847440)"
+#    echo " to get a list of supported devices issue a 'make info' in the OpenWRT image builder directory:"
+#    echo "   '${IMGBUILDER_DIR}'"
+#    kill -INT $$
+#fi
 
 # the absolute minimum for extroot to work at all (i.e. when the disk is already set up, for example by hand).
 # this list may be smaller and/or different for your router, but it works with my ath79.
