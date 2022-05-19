@@ -58,6 +58,16 @@ PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
 PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
 PREINSTALLED_PACKAGES+=" luci"
 
+SAVE_SPACE_PACKAGES=" -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -ath10k"
+
+echo "Remove pkgs? ${SAVE_SPACE_PACKAGES}"
+echo
+read -p "Remove packages: (y/n): " wont_install_pkgs
+
+if [[ -n ${wont_install_pkgs} ]]; then
+	PREINSTALLED_PACKAGES+=${SAVE_SPACE_PACKAGES}
+fi
+
 mkdir -pv ${BUILD}
 
 rm -rf $IMGTEMPDIR
