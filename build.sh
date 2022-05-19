@@ -47,7 +47,7 @@ IMGBUILDERURL="https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGE
 PREINSTALLED_PACKAGES="block-mount kmod-fs-ext4 kmod-usb-storage"
 
 # some kernel modules may also be needed for your hardware
-#PREINSTALLED_PACKAGES+=" kmod-usb-uhci kmod-usb-ohci"
+PREINSTALLED_PACKAGES+=" kmod-usb-uhci kmod-usb-ohci"
 
 # these are needed for the proper functioning of the auto extroot scripts
 PREINSTALLED_PACKAGES+=" blkid mount-utils swap-utils e2fsprogs fdisk"
