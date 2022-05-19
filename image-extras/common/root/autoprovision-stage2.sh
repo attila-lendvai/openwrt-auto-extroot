@@ -11,6 +11,8 @@ installPackages()
     until (opkg update)
      do
         log "opkg update failed. No internet connection? Retrying in 15 seconds..."
+        setLedAttribute green:qss delay_on 2000
+        setLedAttribute green:qss trigger none
         sleep 15
     done
 
