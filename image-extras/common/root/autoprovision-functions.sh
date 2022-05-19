@@ -39,6 +39,9 @@ case $(board_name) in
     *mynet-n750*)
         autoprovisionUSBLed="blue:wps"
         autoprovisionStatusLed="blue:wireless"
+    *archer-c7-v1*)
+        autoprovisionUSBLed="green:wlan2g"
+        autoprovisionStatusLed="green:wlan5g"
         ;;
 esac
 
