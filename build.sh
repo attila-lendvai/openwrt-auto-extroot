@@ -53,9 +53,9 @@ PREINSTALLED_PACKAGES="block-mount kmod-fs-ext4 kmod-usb-storage"
 PREINSTALLED_PACKAGES+=" blkid mount-utils swap-utils e2fsprogs fdisk"
 
 # the following packages are optional, feel free to (un)comment them
-PREINSTALLED_PACKAGES+=" wireless-tools firewall iptables"
-PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
-PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
+#PREINSTALLED_PACKAGES+=" wireless-tools firewall iptables"
+#PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
+#PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
 PREINSTALLED_PACKAGES+=" luci"
 
 SAVE_SPACE_PACKAGES=" -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -ath10k"
