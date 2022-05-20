@@ -3,7 +3,7 @@ config global
       option anon_mount '0'
       option auto_swap '0'
       option auto_mount '0'
-      option delay_root '3'
+      option delay_root '20'
       option check_fs '0'
 
 config swap
@@ -21,6 +21,17 @@ config mount
 config mount
       option target '/mnt/data'
       option uuid '05d615b3-bef8-460c-9a23-52db8d09e001'
+      option fstype 'ext4'
+      option options 'rw,noatime'
+      option enabled '1'
+      option enabled_fsck '0'
+
+# Remove in your build:
+
+config mount
+      option target '/media/hd'
+      # option uuid '413269e7-9ded-427d-8a6c-2c91f716d60e'
+      option label 'hd'
       option fstype 'ext4'
       option options 'rw,noatime'
       option enabled '1'
