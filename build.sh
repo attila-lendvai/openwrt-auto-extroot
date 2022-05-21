@@ -53,21 +53,6 @@ PREINSTALLED_PACKAGES+=" kmod-usb-uhci kmod-usb-ohci"
 # these are needed for the proper functioning of the auto extroot scripts
 PREINSTALLED_PACKAGES+=" blkid mount-utils swap-utils e2fsprogs fdisk"
 
-# Extra pkgs, current, useless
-
-# # SAMBA
-
-EXTRA_PACKAGES="samba4-libs samba4-server luci-app-samba4 luci-i18n-samba4-pt-br"
-
-# # HDIDLE
-EXTRA_PACKAGES+=" hd-idle luci-app-hd-idle luci-i18n-hd-idle-pt-br"
-
-printf "%s\n" "${EXTRA_PACKAGES}" >> "image-extras/common/root/pkgs.txt"
-
-# for pkg in ${EXTRA_PACKAGES}; do
-#     printf "%s\n" "${pkg}" >> "image-extras/common/root/pkgs.txt"
-# done
-
 # the following packages are optional, feel free to (un)comment them
 #PREINSTALLED_PACKAGES+=" wireless-tools firewall iptables"
 #PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"

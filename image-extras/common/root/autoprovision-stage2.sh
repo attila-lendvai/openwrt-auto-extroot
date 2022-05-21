@@ -19,11 +19,17 @@ installPackages()
     signalAutoprovisionWorking
 
     log "Autoprovisioning stage2 is about to install packages"
-    PKGS="$(cat ./pkgs.txt)"
 
-    log "Instalando pacotes: $PKGS"
+    # Extra pkgs, current, useless
 
-    opkg install $PKGS
+    # # SAMBA
+
+    EXTRA_PACKAGES="samba4-libs samba4-server luci-app-samba4 luci-i18n-samba4-pt-br"
+
+    # # HDIDLE
+    EXTRA_PACKAGES+=" hd-idle luci-app-hd-idle luci-i18n-hd-idle-pt-br"
+
+    opkg install $EXTRA_PACKAGES
 
     # switch ssh from dropbear to openssh (needed to install sshtunnel)
     #opkg remove dropbear
