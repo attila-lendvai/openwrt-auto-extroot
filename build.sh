@@ -7,14 +7,14 @@ TARGET_ARCHITECTURE=$2
 TARGET_VARIANT=$3
 TARGET_DEVICE=$4
 
-BUILD=`dirname "$0"`"/build/"
-BUILD=`readlink -f $BUILD`
+BUILD="$(dirname "${0}")/build/"
+BUILD="$(readlink -f "${BUILD}")"
 
 ###
 ### chose a release
 ###
 
-if [[ ! -n ${RELEASE} ]]; then
+if [[ ! -n "${RELEASE}" ]]; then
 	RELEASE="21.02.0"
 fi
 
@@ -25,6 +25,7 @@ IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
 IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.xz"
 
 IMGTEMPDIR="${BUILD}/image-extras"
+
 # see this feature request:
 # FS#1670 - consistent naming convention for the imagebuilder.tar.xz URL
 # https://bugs.openwrt.org/index.php?do=details&task_id=1670
@@ -63,6 +64,10 @@ EXTRA_PACKAGES+=" hd-idle luci-app-hd-idle luci-i18n-hd-idle-pt-br"
 
 printf "%s\n" "${EXTRA_PACKAGES}" >> "image-extras/common/root/pkgs.txt"
 
+# for pkg in ${EXTRA_PACKAGES}; do
+#     printf "%s\n" "${pkg}" >> "image-extras/common/root/pkgs.txt"
+# done
+
 # the following packages are optional, feel free to (un)comment them
 #PREINSTALLED_PACKAGES+=" wireless-tools firewall iptables"
 #PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
@@ -73,34 +78,37 @@ SAVE_SPACE_PACKAGES=" -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-i
 
 echo "Remove pkgs? ${SAVE_SPACE_PACKAGES}"
 echo
-read -p "Remove packages: (y/n): " wont_install_pkgs
 
-if [[ -n ${wont_install_pkgs} ]]; then
-	PREINSTALLED_PACKAGES+=${SAVE_SPACE_PACKAGES}
+echo "Remove packages: (y/n): "
+read -r WONT_INSTALL_PKGS
+
+if [[ -n "${WONT_INSTALL_PKGS}" ]]; then
+	PREINSTALLED_PACKAGES+="${SAVE_SPACE_PACKAGES}"
 fi
 
-mkdir -pv ${BUILD}
+mkdir -pv "${BUILD}"
 
-rm -rf $IMGTEMPDIR
-cp -r image-extras/common/ $IMGTEMPDIR
-PER_PLATFORM_IMAGE_EXTRAS=image-extras/${TARGET_DEVICE}/
-if [[ -e $PER_PLATFORM_IMAGE_EXTRAS ]]; then
-    rsync -pr $PER_PLATFORM_IMAGE_EXTRAS $IMGTEMPDIR/
+rm -rf "${IMGTEMPDIR}"
+cp -r "image-extras/common/" "${IMGTEMPDIR}"
+PER_PLATFORM_IMAGE_EXTRAS="image-extras/${TARGET_DEVICE}/"
+
+if [[ -e "${PER_PLATFORM_IMAGE_EXTRAS}" ]]; then
+    rsync -pr "${PER_PLATFORM_IMAGE_EXTRAS}" "${IMGTEMPDIR}/"
 fi
 
-if [[ ! -e ${IMGBUILDER_DIR} ]]; then
-    pushd ${BUILD}
+if [[ ! -e "${IMGBUILDER_DIR}" ]]; then
+    pushd "${BUILD}"
     # --no-check-certificate if needed
-    wget --continue ${IMGBUILDERURL}
-    xz -d <${IMGBUILDER_ARCHIVE} | tar vx
+    wget --continue "${IMGBUILDERURL}"
+    xz -d <"${IMGBUILDER_ARCHIVE}" | tar vx
     popd
 fi
 
-pushd ${IMGBUILDER_DIR}
+pushd "${IMGBUILDER_DIR}"
 
-make image PROFILE=${TARGET_DEVICE} PACKAGES="${PREINSTALLED_PACKAGES}" FILES=${IMGTEMPDIR}
+make image PROFILE="${TARGET_DEVICE}" PACKAGES="${PREINSTALLED_PACKAGES}" FILES="${IMGTEMPDIR}"
 
-pushd bin/targets/${TARGET_ARCHITECTURE}/
+pushd "bin/targets/${TARGET_ARCHITECTURE}/"
 ln -s ../../../packages .
 popd
 
