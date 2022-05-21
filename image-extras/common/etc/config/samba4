@@ -1,0 +1,20 @@
+
+config samba
+        option workgroup 'WORKGROUP'
+        option charset 'UTF-8'
+        option description 'Samba on OpenWRT'
+        option enable_extra_tuning '1'
+        option disable_async_io '1'
+        option allow_legacy_protocols '1'
+        option interface 'lan wan'
+
+config sambashare
+        option name 'hd'
+        option path '/media/hd'
+        option read_only 'no'
+        option force_root '1'
+        option users 'root'
+        option guest_ok 'yes'
+        option inherit_owner 'yes'
+        option create_mask '0666'
+        option dir_mask '0777'

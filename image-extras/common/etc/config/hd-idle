@@ -1,0 +1,6 @@
+
+config hd-idle
+        option enabled '1'
+        option disk 'sdb'
+        option idle_time_interval '1'
+        option idle_time_unit 'minutes'
