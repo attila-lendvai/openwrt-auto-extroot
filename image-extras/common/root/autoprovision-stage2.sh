@@ -19,6 +19,11 @@ installPackages()
     signalAutoprovisionWorking
 
     log "Autoprovisioning stage2 is about to install packages"
+    PKGS="$(cat ./pkgs.txt)"
+
+    log "Instalando pacotes: $PKGS"
+
+    opkg install $PKGS
 
     # switch ssh from dropbear to openssh (needed to install sshtunnel)
     #opkg remove dropbear
