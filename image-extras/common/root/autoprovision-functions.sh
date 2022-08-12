@@ -1,14 +1,19 @@
 #!/bin/sh
 
-# utility functions for the various stages of autoprovisioning
+# Array, compatible with sh
+# This is the uuid of disk to be ignored
+# when the wrong disk is assigned to /dev/sda
+# more uuids can be added set -- "uuid" "uuid"
+set -- "2aa93491-d111-4942-865a-be5ec8e2e9f4"
 
+# utility functions for the various stages of autoprovisioning
 # make sure that installed packages take precedence over busybox. see https://dev.openwrt.org/ticket/18523
 PATH="/usr/bin:/usr/sbin:/bin:/sbin"
 
 # these are also copy-pasted into other scripts and config files!
-rootUUID=05d615b3-bef8-460c-9a23-52db8d09e000
-dataUUID=05d615b3-bef8-460c-9a23-52db8d09e001
-swapUUID=05d615b3-bef8-460c-9a23-52db8d09e002
+export rootUUID=05d615b3-bef8-460c-9a23-52db8d09e000
+export dataUUID=05d615b3-bef8-460c-9a23-52db8d09e001
+export swapUUID=05d615b3-bef8-460c-9a23-52db8d09e002
 
 . /lib/functions.sh
 
@@ -16,7 +21,24 @@ swapUUID=05d615b3-bef8-460c-9a23-52db8d09e002
 autoprovisionUSBLed="green:usb"
 autoprovisionStatusLed="green:qss"
 
-echo Board name is [$(board_name)]
+log()
+{
+    /usr/bin/logger -t autoprov -s "${*}"
+}
+
+for device in "${@}"; do
+    dev_path=$(blkid -U "${device}")
+    if [ "/dev/sda" = "${dev_path}" ]; then
+        logger "${dev_path}"
+        sleep 10
+        echo "Rebooting..."
+        reboot
+    else
+        echo "hello" > "/root/teste.txt"
+    fi
+done
+
+echo "Board name is [${board_name}]"
 
 # CUSTOMIZE
 case $(board_name) in
@@ -41,12 +63,6 @@ case $(board_name) in
         autoprovisionStatusLed="green:wlan5g"
         ;;
 esac
-
-
-log()
-{
-    /usr/bin/logger -t autoprov -s $*
-}
 
 setLedAttribute()
 {
@@ -95,12 +111,12 @@ stopSignallingAnything()
 
 setRootPassword()
 {
-    local password=$1
-    if [ "$password" == "" ]; then
+    _password_=$1
+    if [ "${_password_}" = "" ]; then
         # set and forget a random password merely to disable telnet. login will go through ssh keys.
-        password=$(</dev/urandom sed 's/[^A-Za-z0-9+_]//g' | head -c 22)
+        _password_=$(</dev/urandom sed 's/[^A-Za-z0-9+_]//g' | head -c 22)
     fi
     #echo "Setting root password to '"$password"'"
     log "Setting root password"
-    echo -e "$password\n$password\n" | passwd root
+    printf  "$%\n$%\n" "${_password_}" "${_password_}" | passwd root
 }
