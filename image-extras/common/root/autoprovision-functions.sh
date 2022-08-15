@@ -33,8 +33,6 @@ for device in "${@}"; do
         sleep 10
         echo "Rebooting..."
         reboot
-    else
-        echo "hello" > "/root/teste.txt"
     fi
 done
 
