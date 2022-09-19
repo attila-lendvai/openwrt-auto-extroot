@@ -133,3 +133,13 @@ when there's not enough space in the flash memory of the target device to instal
 then the OpenWrt ImageBuilder prints a hardly visible error into its flow of output and
 silently continues. Look into [build.sh](build.sh#L31) and try to remove some packages
 that you can live without.
+
+## Extroot is not mounted after a `sysupgrade`
+
+In short, this is an OpenWrt issue. The longer discussion is available in
+[this issue](https://github.com/attila-lendvai/openwrt-auto-extroot/issues/12),
+and a way to deal with it can be found in
+[this blog post](https://blog.mbirth.de/archives/2014/05/26/openwrt-sysupgrade-with-extroot.html).
+You may also want to check out the
+[official OpenWrt wiki](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration#system_upgrade)
+on this topic.
