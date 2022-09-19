@@ -1,7 +1,7 @@
 # What
 
 It's a script to build a customized
-[OpenWRT](https://openwrt.org/docs/guide-user/start)
+[OpenWrt](https://openwrt.org/docs/guide-user/start)
 firmware image using
 [ImageBuilder](https://openwrt.org/docs/guide-user/additional-software/imagebuilder).
 
@@ -26,7 +26,7 @@ project because I thought it's useful enough for making it public.
 
 # How
 
-You can read more about the underlying technology on the OpenWRT wiki: see e.g. the
+You can read more about the underlying technology on the OpenWrt wiki: see e.g. the
 [ImageBuilder](https://openwrt.org/docs/guide-user/additional-software/imagebuilder)
 page, or the page that lists some other
 [ImageBuilder frontends](https://openwrt.org/docs/guide-developer/imagebuilder_frontends).
@@ -38,7 +38,7 @@ when the extroot has failed to mount early in the boot process.
 
 ### Building
 
-OpenWRT's ImageBuilder only works on Linux x86_64. To build a firmware, issue the following command:
+OpenWrt's ImageBuilder only works on Linux x86_64. To build a firmware, issue the following command:
 `./build.sh architecture variant device-profile`, e.g.:
 
 * `./build.sh ath79 generic tplink_tl-wr1043nd-v1`
@@ -50,7 +50,7 @@ Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${v
 
 To see a list of available targets, run `make info` in the ImageBuilder dir.
 
-If you want to change which OpenWRT version is used, then edit the relevant variable(s)
+If you want to change which OpenWrt version is used, then edit the relevant variable(s)
 in `build.sh`.
 
 ### Setup stages
@@ -68,7 +68,7 @@ space), and then reboot.
 #### Stage 2: download and install some packages from the internet
 
 Once it rebooted into the new extroot, it will continuously keep trying to install
-some OpenWRT packages until an internet connection is set up on the router. You
+some OpenWrt packages until an internet connection is set up on the router. You
 need to do that manually either by using ssh or the web UI (LuCI).
 
 #### Stage 3, optional
@@ -85,7 +85,7 @@ By default the root passwd is not set, so the router will start telnet with
 no password. If you want to set up a password, then edit the stage 2 script:
 [autoprovision-stage2.sh](image-extras/common/root/autoprovision-stage2.sh#L53).
 
-If a password is set, then telnet is disabled by OpenWRT and SSH will listen
+If a password is set, then telnet is disabled by OpenWrt and SSH will listen
 using the keys specified in [authorized_keys](image-extras/common/etc/dropbear/authorized_keys).
 
 Once connected, you can read the log with `logread -f`.
@@ -110,26 +110,26 @@ your router in the initial setup phase.
 
 ## Which file should I flash?
 
-You should consult the [OpenWRT documentation](https://openwrt.org/docs/guide-user/start).
+You should consult the [OpenWrt documentation](https://openwrt.org/docs/guide-user/start).
 The produced firmware files should be somewhere around
 ```./build/openwrt-imagebuilder-21.02.0-ath79-generic.Linux-x86_64/bin/targets/ath79/generic/```.
 
 In short:
 
 * You need a file with the name ```-factory.bin``` or ```-sysupgrade.bin```. The former is to
-  be used when you first install OpenWRT, the latter is when you upgrade an already installed
-  OpenWRT.
+  be used when you first install OpenWrt, the latter is when you upgrade an already installed
+  OpenWrt.
 
 * You must carefully pick the proper firmware file for your **hardware version**! I advise you
-  to look up the wiki page for your hardware on the [OpenWRT wiki](https://openwrt.org),
+  to look up the wiki page for your hardware on the [OpenWrt wiki](https://openwrt.org),
   because most of them have a table of the released hardware versions with comments on their
-  status (sometimes new hardware revisions are only supported by the latest OpenWRT, which is
+  status (sometimes new hardware revisions are only supported by the latest OpenWrt, which is
   not released yet).
 
 ## Help! The build has finished but there's no firmware file!
 
 If the build doesn't yield a firmware file (```*-factory.bin``` and/or ```*-sysupgrade.bin```):
 when there's not enough space in the flash memory of the target device to install everything
-then the OpenWRT ImageBuilder prints a hardly visible error into its flow of output and
+then the OpenWrt ImageBuilder prints a hardly visible error into its flow of output and
 silently continues. Look into [build.sh](build.sh#L31) and try to remove some packages
 that you can live without.
