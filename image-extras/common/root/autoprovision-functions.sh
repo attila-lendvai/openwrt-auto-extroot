@@ -36,6 +36,10 @@ case $(board_name) in
         autoprovisionUSBLed="green:wlan2g"
         autoprovisionStatusLed="green:wlan5g"
         ;;
+    *mynet-n750*)
+        autoprovisionUSBLed="blue:wps"
+        autoprovisionStatusLed="blue:wireless"
+        ;;
 esac
 
 
