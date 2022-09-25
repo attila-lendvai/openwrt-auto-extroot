@@ -32,11 +32,7 @@ case $(board_name) in
         autoprovisionUSBLed="green:wps"
         autoprovisionStatusLed="green:wlan5g"
         ;;
-    *tl-wdr3600*)
-        autoprovisionUSBLed="green:wlan2g"
-        autoprovisionStatusLed="green:wlan5g"
-        ;;
-    *tl-wdr4300*)
+    *tl-wdr3600* | *tl-wdr4300*)
         autoprovisionUSBLed="green:wlan2g"
         autoprovisionStatusLed="green:wlan5g"
         ;;
