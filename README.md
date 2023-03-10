@@ -100,11 +100,12 @@ probably want to customize this script here and there; search for
 Most importantly, **set up a password and maybe an ssh key**.
 
 At the time of writing it only supports a few `ath79` routers out of
-the box, but it's easy to extend it. Support for a new router entails
-looking up some led names for `setLedAttribute` so that there's
-feedback to the user through the blinking of the leds. It should work
-fine without that, but it will be less convenient to interact with
-your router in the initial setup phase.
+the box, where support merely means that it can flash some leds in the
+initial setup phase as a feedback mechanism. It's easy to extend it,
+just look up and add some hw specific led names in
+`setLedAttribute`. Everything else should work fine without this, but
+it will be less convenient to interact with your router in the initial
+setup phase.
 
 # Troubleshooting
 
@@ -136,7 +137,8 @@ that you can live without.
 
 ## Extroot is not mounted after a `sysupgrade`
 
-In short, this is an OpenWrt issue. The longer discussion is available in
+In short, this is an OpenWrt issue, and the solution is to mount the extroot
+somewhere, and delete `/etc/.extroot-uuid`. More details are available in
 [this issue](https://github.com/attila-lendvai/openwrt-auto-extroot/issues/12),
 and a way to deal with it can be found in
 [this blog post](https://blog.mbirth.de/archives/2014/05/26/openwrt-sysupgrade-with-extroot.html).
