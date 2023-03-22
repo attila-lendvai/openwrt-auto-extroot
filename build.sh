@@ -52,6 +52,13 @@ PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
 PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
 PREINSTALLED_PACKAGES+=" luci"
 
+# you exclude packages with this to shrink the image for
+# routers with smaller flash storage.
+# SAVE_SPACE_PACKAGES=" -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -ath10k"
+SAVE_SPACE_PACKAGES=""
+
+PREINSTALLED_PACKAGES+=${SAVE_SPACE_PACKAGES}
+
 mkdir -pv ${BUILD}
 
 rm -rf $IMGTEMPDIR
