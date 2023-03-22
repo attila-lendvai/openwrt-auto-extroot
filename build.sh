@@ -6,8 +6,8 @@ TARGET_ARCHITECTURE=$1
 TARGET_VARIANT=$2
 TARGET_DEVICE=$3
 
-BUILD=`dirname "$0"`"/build/"
-BUILD=`readlink -f $BUILD`
+BUILD="$(dirname "${0}")/build/"
+BUILD="$(readlink -f "${BUILD}")"
 
 ###
 ### chose a release
@@ -59,28 +59,28 @@ SAVE_SPACE_PACKAGES=""
 
 PREINSTALLED_PACKAGES+=${SAVE_SPACE_PACKAGES}
 
-mkdir -pv ${BUILD}
+mkdir -pv "${BUILD}"
 
-rm -rf $IMGTEMPDIR
-cp -r image-extras/common/ $IMGTEMPDIR
-PER_PLATFORM_IMAGE_EXTRAS=image-extras/${TARGET_DEVICE}/
-if [ -e $PER_PLATFORM_IMAGE_EXTRAS ]; then
-    rsync -pr $PER_PLATFORM_IMAGE_EXTRAS $IMGTEMPDIR/
+rm -rf "${IMGTEMPDIR}"
+cp -r image-extras/common/ "${IMGTEMPDIR}"
+PER_PLATFORM_IMAGE_EXTRAS="image-extras/${TARGET_DEVICE}/"
+if [ -e "${PER_PLATFORM_IMAGE_EXTRAS}" ]; then
+    rsync -pr "${PER_PLATFORM_IMAGE_EXTRAS}" "${IMGTEMPDIR}/"
 fi
 
-if [ ! -e ${IMGBUILDER_DIR} ]; then
-    pushd ${BUILD}
+if [ ! -e "${IMGBUILDER_DIR}" ]; then
+    pushd "${BUILD}"
     # --no-check-certificate if needed
-    wget --continue ${IMGBUILDERURL}
-    xz -d <${IMGBUILDER_ARCHIVE} | tar vx
+    wget --continue "${IMGBUILDERURL}"
+    xz -d <"${IMGBUILDER_ARCHIVE}" | tar vx
     popd
 fi
 
-pushd ${IMGBUILDER_DIR}
+pushd "${IMGBUILDER_DIR}"
 
 make image PROFILE=${TARGET_DEVICE} PACKAGES="${PREINSTALLED_PACKAGES}" FILES=${IMGTEMPDIR}
 
-pushd bin/targets/${TARGET_ARCHITECTURE}/
+pushd "bin/targets/${TARGET_ARCHITECTURE}/"
 ln -s ../../../packages .
 popd
 
