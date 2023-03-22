@@ -81,7 +81,7 @@ pushd "${IMGBUILDER_DIR}"
 make image PROFILE=${TARGET_DEVICE} PACKAGES="${PREINSTALLED_PACKAGES}" FILES=${IMGTEMPDIR}
 
 pushd "bin/targets/${TARGET_ARCHITECTURE}/"
-ln -s ../../../packages .
+ln -sf ../../../packages .
 popd
 
 popd
