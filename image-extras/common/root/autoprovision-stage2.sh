@@ -12,6 +12,8 @@ installPackages()
      do
         log "opkg update failed. No internet connection? Retrying in 15 seconds..."
         sleep 15
+        # Initiate a synchronous time update.
+        ntpd -d -q -n -p openwrt.pool.ntp.org
     done
 
     signalAutoprovisionWorking
@@ -50,8 +52,9 @@ autoprovisionStage2()
     else
         signalAutoprovisionWorking
 
-	echo Updating system time using ntp; otherwise the openwrt.org certificates are rejected as not yet valid.
-        ntpd -d -q -n -p 0.openwrt.pool.ntp.org
+	log "Starting ntpd to update system time; otherwise the openwrt.org certificates are rejected as not yet valid."
+        # Added -l hoping that it may help against ntpd quitting.
+        ntpd -l -N -p openwrt.pool.ntp.org
 
         # CUSTOMIZE: with an empty argument it will set a random password and only ssh key based login will work.
         # please note that stage2 requires internet connection to install packages and you most probably want to log in
