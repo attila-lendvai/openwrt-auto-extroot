@@ -38,7 +38,8 @@ fi
 
 # the absolute minimum for extroot to work at all (i.e. when the disk is already set up, for example by hand).
 # this list may be smaller and/or different for your router, but it works with my ath79.
-PREINSTALLED_PACKAGES="block-mount kmod-fs-ext4 kmod-usb-storage"
+# blockdev is needed to re-read the partition table using `blockdev --rereadpt /dev/sdX`
+PREINSTALLED_PACKAGES="block-mount kmod-fs-ext4 kmod-usb-storage blockdev"
 
 # some kernel modules may also be needed for your hardware
 #PREINSTALLED_PACKAGES+=" kmod-usb-uhci kmod-usb-ohci"

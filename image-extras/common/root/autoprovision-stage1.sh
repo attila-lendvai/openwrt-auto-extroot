@@ -31,14 +31,24 @@ hasBigEnoughPendrive()
     fi
 }
 
+rereadPartitionTable()
+{
+    log "Rereading partition table"
+    blockdev --rereadpt /dev/sda
+}
+
 setupPendrivePartitions()
 {
+    log "Erasing partition table"
     # erase partition table
     dd if=/dev/zero of=/dev/sda bs=1M count=1
 
+    rereadPartitionTable
+
+    log "Creating partitions"
     # sda1 is 'swap'
     # sda2 is 'root'
-    # sda3 is 'data'
+    # sda3 is 'data', if there's any space left
     fdisk /dev/sda <<EOF
 o
 n
@@ -64,7 +74,7 @@ q
 EOF
     log "Finished partitioning /dev/sda using fdisk"
 
-    sleep 2
+    rereadPartitionTable
 
     until [ -e /dev/sda1 ]
     do
@@ -76,6 +86,7 @@ EOF
     mkfs.ext4 -F -L root -U $rootUUID /dev/sda2
     mkfs.ext4 -F -L data -U $dataUUID /dev/sda3
 
+    rereadPartitionTable
     log "Finished setting up filesystems"
 }
 
