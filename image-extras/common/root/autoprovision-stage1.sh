@@ -86,7 +86,6 @@ EOF
     mkfs.ext4 -F -L root -U $rootUUID /dev/sda2
     mkfs.ext4 -F -L data -U $dataUUID /dev/sda3
 
-    rereadPartitionTable
     log "Finished setting up filesystems"
 }
 
