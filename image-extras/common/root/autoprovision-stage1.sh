@@ -23,7 +23,7 @@ getPendriveSize()
 hasBigEnoughPendrive()
 {
     local size=$(getPendriveSize)
-    if [ $size -ge 600000 ]; then
+    if [ $size -ge 100000 ]; then
         log "Found a pendrive of size: $(($size / 2 / 1024)) MB"
         return 0
     else
