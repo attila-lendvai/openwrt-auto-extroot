@@ -5,24 +5,23 @@ It's a script to build a customized
 firmware image using
 [ImageBuilder](https://openwrt.org/docs/guide-user/additional-software/imagebuilder).
 
-If the generated image is flashed on a device it will try to
-automatically set up
+If the generated image is flashed on a router, then during its boot
+process it will try to automatically set up
 [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration)
 on **any (!)** storage device plugged into the USB port (`/dev/sda`),
-including your working extroot pendrive if you plug it in only later
-in the boot process. Keep in mind that **this will erase any inserted
-storage device while the router is in the initial setup phase**!
-Unfortunately there's little that can be done at that point to ask the
-user for confirmation.
+including your already working extroot pendrive if you plug it in too
+late in the boot process.
 
 # Why
 
-So that e.g. customers can buy a router on their own, flash our custom
+So that e.g. customers can buy a router on their own, download and flash our custom
 firmware, plug in a pendrive, and manage their SIP (telephony) node
 from our webapp.
 
 I've extracted the generic parts from the above mentioned auto-provision
 project because I thought it's useful enough for making it public.
+
+It also serves me well on my own routers ever since then.
 
 # How
 
@@ -33,8 +32,13 @@ page, or the page that lists some other
 
 As for the actual mechanism: custom scripts are baked into the boot
 process of the flashed firmware. If the extroot overlay is properly
-set up, then these scripts get hidden by it; i.e. they will only run
+set up, then these scripts get hidden by it; i.e. they will only be run
 when the extroot has failed to mount early in the boot process.
+
+Keep in mind that **this will automatically erase/format any inserted
+storage device while the router is in the initial setup phase**!
+Unfortunately there's little that can be done at that point to ask the
+user for confirmation.
 
 ### Building
 
@@ -50,8 +54,10 @@ Results will be under `build/openwrt-imagebuilder-${release}-${architecture}-${v
 
 To see a list of available targets, run `make info` in the ImageBuilder dir.
 
-If you want to change which OpenWrt version is used, then edit the relevant variable(s)
-in `build.sh`.
+If you want to change which OpenWrt version is used, then try editing
+the relevant variable(s) in `build.sh`. It's not guaranteed to work
+across OpenWrt releases, therefore we keep git branches for the past
+releases.
 
 ### Setup stages
 
@@ -93,19 +99,18 @@ Once connected, you can read the log with `logread -f`.
 # Status
 
 This is more of a template than something standalone, but I use it for
-my home routers as is. You most
+my home routers as is. For more specific applications you most
 probably want to customize this script here and there; search for
 `CUSTOMIZE` for places of interest.
 
-Most importantly, **set up a password and maybe an ssh key**.
+Most importantly, **set up a password and maybe add your ssh key** by
+adding it to `image-extras/common/etc/dropbear/authorized_keys`.
 
-At the time of writing it only supports a few `ath79` routers out of
-the box, where support merely means that it can flash some leds in the
-initial setup phase as a feedback mechanism. It's easy to extend it,
-just look up and add some hw specific led names in
-`setLedAttribute`. Everything else should work fine without this, but
-it will be less convenient to interact with your router in the initial
-setup phase.
+None of this script is hardware specific except `setLedAttribute`,
+which is used to provide feedback about the progress of the initial
+setup phase. At the time of writing it only works on a few routers
+(mostly `ath79` ones), but without this everything should work fine,
+if only a bit less convenient.
 
 # Troubleshooting
 
