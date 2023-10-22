@@ -70,6 +70,9 @@ fi
 
 pushd ${IMGBUILDER_DIR}
 
+# Without this the image builder fails.
+export SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)
+
 make image PROFILE=${TARGET_DEVICE} PACKAGES="${PREINSTALLED_PACKAGES}" FILES=${IMGTEMPDIR}
 
 pushd bin/targets/${TARGET_ARCHITECTURE}/
