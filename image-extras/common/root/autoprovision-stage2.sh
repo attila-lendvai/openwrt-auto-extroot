@@ -52,7 +52,7 @@ autoprovisionStage2()
     else
         signalAutoprovisionWorking
 
-	log "Starting ntpd to update system time; otherwise the openwrt.org certificates are rejected as not yet valid."
+        log "Starting ntpd to update system time; otherwise the openwrt.org certificates are rejected as not yet valid."
         # Added -l hoping that it may help against ntpd quitting.
         ntpd -l -N -p openwrt.pool.ntp.org
 

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Note: this runs as-is, pretty much without external
+# dependencies. The OpenWrt ImageBuilder contains the toolchain and
+# everything that is needed to build the firmware images.
+
 set -e
 
 TARGET_ARCHITECTURE=$1
