@@ -41,7 +41,7 @@ setupPendrivePartitions()
 {
     log "Erasing partition table"
     # erase partition table
-    dd if=/dev/zero of=/dev/sda bs=1M count=1
+    dd if=/dev/zero of=/dev/sda bs=1k count=256
 
     rereadPartitionTable
 
