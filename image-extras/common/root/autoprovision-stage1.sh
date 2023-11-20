@@ -115,7 +115,26 @@ EOF
 #    ln -s /tmp state
 #    cd -
 
+    disableStage1
+
     log "Finished setting up extroot"
+}
+
+disableStage1()
+{
+    # FIXME it would be more future-proof to transform the rc.local file
+    # instead of overwriting it.
+    cat >/etc/rc.local <<EOF
+# If you want to re-run the initialization of the extroot once again,
+# then remove the comment from before the stage1.sh script below,
+# reboot the router without the extroot pendrive, and when it's booted
+# then insert the pendrive. It will then be reformatted and
+# reinitialized.
+
+#/root/autoprovision-stage1.sh
+
+exit 0
+EOF
 }
 
 autoprovisionStage1()
