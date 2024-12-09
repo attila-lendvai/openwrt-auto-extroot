@@ -52,9 +52,10 @@ PREINSTALLED_PACKAGES="block-mount kmod-fs-ext4 kmod-usb-storage blockdev"
 PREINSTALLED_PACKAGES+=" blkid mount-utils swap-utils e2fsprogs fdisk"
 
 # the following packages are optional, feel free to (un)comment them
-PREINSTALLED_PACKAGES+=" wireless-tools firewall4"
-PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
-PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
+PREINSTALLED_PACKAGES+=" firewall4"
+#PREINSTALLED_PACKAGES+=" wireless-tools"
+#PREINSTALLED_PACKAGES+=" kmod-usb-storage-extras kmod-mmc"
+#PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
 PREINSTALLED_PACKAGES+=" luci"
 
 # you exclude packages with this to shrink the image for
