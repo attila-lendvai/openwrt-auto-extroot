@@ -16,11 +16,11 @@ BUILD="$(readlink -f "${BUILD}")"
 ###
 ### chose a release
 ###
-RELEASE="23.05.2"
+RELEASE="24.10.0-rc2"
 
 IMGBUILDER_NAME="openwrt-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
-IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.xz"
+IMGBUILDER_ARCHIVE="${IMGBUILDER_NAME}.tar.zst"
 
 IMGTEMPDIR="${BUILD}/image-extras"
 # see this feature request:
@@ -77,7 +77,7 @@ if [ ! -e "${IMGBUILDER_DIR}" ]; then
     pushd "${BUILD}"
     # --no-check-certificate if needed
     wget --continue "${IMGBUILDERURL}"
-    xz -d <"${IMGBUILDER_ARCHIVE}" | tar vx
+    zstd --decompress <"${IMGBUILDER_ARCHIVE}" | tar vx
     popd
 fi
 
