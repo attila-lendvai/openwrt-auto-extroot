@@ -96,6 +96,43 @@ using the keys specified in [authorized_keys](image-extras/common/etc/dropbear/a
 
 Once connected, you can read the log with `logread -f`.
 
+### Upgrading
+
+I have kinda succeeded to upgrade an installation from `24.10.0-rc4`
+to `24.10.1` using the following steps:
+
+- build a new image.bin using openwrt-auto-extroot
+
+- copy the image.bin to `/tmp` on the router
+
+- `sysupgrage -c -o /tmp/image.bin`
+
+- the new version came back online (into a non-trivial network setup)
+
+- `nano /usr/lib/opkg/status` and edit the entry for `Package:
+  kernel`: update the version to the new one,
+  `6.6.86~64576e1418bd4546fdb49285deb3b11c-r1` in this case. I looked
+  it up by `find . | grep kernel` in the ImageBuilder
+  directory. Without this step the `kmod-*` packages fail to upgrade
+  due to the missing kernel dependency. The kernel package itself is
+  not listed in the opkg package database, because you need to use
+  sysupgrade to update the kernel.
+
+- `opkg update`
+
+- `opkg list-upgradable | cut -f 1 -d ' ' | xargs -r opkg upgrade`
+
+- ?! somehow once the extroot disappeared (got unmounted?), but then
+  it came back after a reboot.
+
+- most things worked fine, but e.g. usteer failed to start (`Command
+  failed: Request timed out`), and opkg was printing strange errors
+  (`* pkg_get_installed_files: Failed to open
+  //usr/lib/opkg/info/libuci20130104.list: No such file or
+  directory.`).
+  
+- I have decided to reinstall the router using my uci based script.
+
 # Status
 
 This is more of a template than something standalone, but I use it for
