@@ -40,6 +40,7 @@ rereadPartitionTable()
 setupPendrivePartitions()
 {
     log "Erasing partition table"
+    # TODO find a way to keep the data partition/fs when already present.
     # erase partition table
     dd if=/dev/zero of=/dev/sda bs=1k count=256
 
