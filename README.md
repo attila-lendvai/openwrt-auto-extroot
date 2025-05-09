@@ -101,18 +101,22 @@ Once connected, you can read the log with `logread -f`.
 I have kinda succeeded to upgrade an installation from `24.10.0-rc4`
 to `24.10.1` using the following steps:
 
-- build a new image.bin using openwrt-auto-extroot
+<details>
 
-- copy the image.bin to `/tmp` on the router
+- build a new image.bin using openwrt-auto-extroot: `./build.sh ath79 generic tplink_tl-wdr4300-v1`
+
+- `scp image.bin root@router.lan:/tmp/`
 
 - `sysupgrage -c -o /tmp/image.bin`
 
-- the new version came back online (into a non-trivial network setup)
+- the new version came back online (into a non-trivial network setup
+  with vlans!)
 
-- `nano /usr/lib/opkg/status` and edit the entry for `Package:
-  kernel`: update the version to the new one,
+- Edit the version of the `kernel` package in the opkg database: `nano
+  /usr/lib/opkg/status` and edit the entry for `Package: kernel`:
+  update the version to the new one,
   `6.6.86~64576e1418bd4546fdb49285deb3b11c-r1` in this case. I looked
-  it up by `find . | grep kernel` in the ImageBuilder
+  up the new version by `find . | grep kernel` in the ImageBuilder
   directory. Without this step the `kmod-*` packages fail to upgrade
   due to the missing kernel dependency. The kernel package itself is
   not listed in the opkg package database, because you need to use
@@ -131,7 +135,9 @@ to `24.10.1` using the following steps:
   //usr/lib/opkg/info/libuci20130104.list: No such file or
   directory.`).
   
-- I have decided to reinstall the router using my uci based script.
+- At this point I have decided to reinstall the router using my uci
+  based script. Patches are welcome for the upgrade instructions.
+</details>
 
 # Status
 
