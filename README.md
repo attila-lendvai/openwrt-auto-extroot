@@ -189,7 +189,7 @@ In short, this is an OpenWrt issue, and the solution is to mount the extroot
 somewhere, and delete `/etc/.extroot-uuid`. More details are available in
 [this issue](https://github.com/attila-lendvai/openwrt-auto-extroot/issues/12),
 and a way to deal with it can be found in
-[this blog post](https://blog.mbirth.de/archives/2014/05/26/openwrt-sysupgrade-with-extroot.html).
+[this blog post](https://blog.mbirth.uk/2014/05/26/openwrt-sysupgrade-with-extroot.html).
 You may also want to check out the
 [official OpenWrt wiki](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration#system_upgrade)
 on this topic.
