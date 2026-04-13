@@ -8,9 +8,9 @@ installPackages()
 {
     signalAutoprovisionWaitingForUser
 
-    until (opkg update)
+    until (apk update)
      do
-        log "opkg update failed. No internet connection? Retrying in 15 seconds..."
+        log "apk update failed. No internet connection? Retrying in 15 seconds..."
         sleep 15
         # Initiate a synchronous time update.
         ntpd -d -q -n -p openwrt.pool.ntp.org
@@ -21,8 +21,8 @@ installPackages()
     log "Autoprovisioning stage2 is about to install packages"
 
     # switch ssh from dropbear to openssh (needed to install sshtunnel)
-    #opkg remove dropbear
-    #opkg install openssh-server openssh-sftp-server sshtunnel
+    #apk del dropbear
+    #apk add openssh-server openssh-sftp-server sshtunnel
 
     #/etc/init.d/sshd enable
     #mkdir /root/.ssh
@@ -32,10 +32,10 @@ installPackages()
 
     # CUSTOMIZE
     # install some more packages that don't need any extra steps
-    opkg install lua luci ppp-mod-pppoe screen mc unzip logrotate
+    apk add lua luci ppp-mod-pppoe screen mc unzip logrotate
 
     # this is needed for the vlans on tp-link 3020 with only a single hw ethernet port
-    opkg install kmod-macvlan ip
+    apk add kmod-macvlan ip
 
     # just in case if we were run in a firmware that didn't already have luci
     /etc/init.d/uhttpd enable

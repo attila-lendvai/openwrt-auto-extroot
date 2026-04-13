@@ -16,7 +16,7 @@ BUILD="$(readlink -f "${BUILD}")"
 ###
 ### chose a release
 ###
-RELEASE="24.10.1"
+RELEASE="25.12.2"
 
 IMGBUILDER_NAME="openwrt-imagebuilder-${RELEASE}-${TARGET_ARCHITECTURE}-${TARGET_VARIANT}.Linux-x86_64"
 IMGBUILDER_DIR="${BUILD}/${IMGBUILDER_NAME}"
@@ -58,10 +58,17 @@ PREINSTALLED_PACKAGES+=" firewall4"
 #PREINSTALLED_PACKAGES+=" ppp ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp kmod-ppp kmod-pppoe"
 PREINSTALLED_PACKAGES+=" luci"
 
-# you exclude packages with this to shrink the image for
-# routers with smaller flash storage.
-# SAVE_SPACE_PACKAGES=" -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -ath10k"
+# These can be used to shrink the image for routers with smaller flash
+# storage. Negative requests beat the inclusion rules above. For 8MB
+# flash targets one must be pretty aggressive since v25.
 SAVE_SPACE_PACKAGES=""
+#SAVE_SPACE_PACKAGES+=" -ppp -ppp-mod-pppoe -luci-proto-ppp -luci-proto-ipv6"
+# firewall (e.g. on dumb APs)
+#SAVE_SPACE_PACKAGES+=" -firewall4 -nftables-json -ip6tables -kmod-nf-conntrack -kmod-nf-conntrack6 -kmod-nf-log -kmod-nf-log6 -kmod-nf-nat -kmod-nf-reject -kmod-nf-reject6 -kmod-nfnetlink -kmod-nft-core -kmod-nft-fib -kmod-nft-nat -kmod-nf-flow -kmod-nft-offload"
+# dns (e.g. on dumb APs, but be careful not to lock yourself out!)
+#SAVE_SPACE_PACKAGES+=" -dnsmasq -odhcpd-ipv6only -odhcp6c"
+#SAVE_SPACE_PACKAGES+=" -luci"
+#SAVE_SPACE_PACKAGES+=" -kmod-ipv6 -kmod-ip6tables -ath10k"
 
 PREINSTALLED_PACKAGES+=${SAVE_SPACE_PACKAGES}
 
