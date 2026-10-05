@@ -98,45 +98,28 @@ Once connected, you can read the log with `logread -f`.
 
 ### Upgrading
 
-I have kinda succeeded to upgrade an installation from `24.10.0-rc4`
-to `24.10.1` using the following steps:
+Using `owut` will fail because it will try to include all the packages
+you installed on the extroot into the flash, which will not fit.
+
+But I have succeeded upgrading an extroot installation from `25.12.2`
+to `25.12.5` using the steps detailed below.
 
 <details>
 
-- build a new image.bin using openwrt-auto-extroot: `./build.sh ath79 generic tplink_tl-wdr4300-v1`
+- build a new image.bin using openwrt-auto-extroot:
+  `./build.sh ath79 generic tplink_tl-wdr4300-v1`
 
-- `scp image.bin root@router.lan:/tmp/`
+- `scp -O image.bin root@router.lan:/tmp/`
 
-- `sysupgrage -c -o /tmp/image.bin`
+- `sysupgrage /tmp/image.bin`
+  (`-c` to preserve the config is enabled by default)
 
-- the new version came back online (into a non-trivial network setup
-  with vlans!)
+- the new version came back online, with extroot mounted
 
-- Edit the version of the `kernel` package in the opkg database: `nano
-  /usr/lib/opkg/status` and edit the entry for `Package: kernel`:
-  update the version to the new one,
-  `6.6.86~64576e1418bd4546fdb49285deb3b11c-r1` in this case. I looked
-  up the new version by `find . | grep kernel` in the ImageBuilder
-  directory. Without this step the `kmod-*` packages fail to upgrade
-  due to the missing kernel dependency. The kernel package itself is
-  not listed in the opkg package database, because you need to use
-  sysupgrade to update the kernel.
+- `apk update && apk upgrade` upgraded 83 packages (I assume on the
+  extroot). No idea whether it would work on a major version bump,
+  though.
 
-- `opkg update`
-
-- `opkg list-upgradable | cut -f 1 -d ' ' | xargs -r opkg upgrade`
-
-- ?! somehow once the extroot disappeared (got unmounted?), but then
-  it came back after a reboot.
-
-- most things worked fine, but e.g. usteer failed to start (`Command
-  failed: Request timed out`), and opkg was printing strange errors
-  (`* pkg_get_installed_files: Failed to open
-  //usr/lib/opkg/info/libuci20130104.list: No such file or
-  directory.`).
-  
-- At this point I have decided to reinstall the router using my uci
-  based script. Patches are welcome for the upgrade instructions.
 </details>
 
 # Status
