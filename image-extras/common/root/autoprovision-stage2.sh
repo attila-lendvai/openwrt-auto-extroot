@@ -64,8 +64,10 @@ autoprovisionStage2()
 
         installPackages
 
+        # you can add/enable stage3 with this line:
+        # */10 * * * * : /root/autoprovision-stage3.py
+
         crontab - <<EOF
-# */10 * * * * /root/autoprovision-stage3.py
 0 0 * * * /usr/sbin/logrotate /etc/logrotate.conf
 EOF
 
